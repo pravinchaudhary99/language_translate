@@ -147,7 +147,9 @@ var LanguageList = function() {
                                 if(response.success) {
                                     toastr.success(response.message ?? 'Language has been updated successfully')
                                 }
-                                $("#kt_modal_add_language").modal('hide');
+                                $("#add_language_form").trigger("reset");
+                                $("#languageSelect").val(null).trigger("change");
+                                $("#kt_modal_add_language").modal("hide");
                                 datatable.ajax.reload(null, false);
                             },
                             error: function(response) {

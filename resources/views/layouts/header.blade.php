@@ -67,7 +67,7 @@
                                     <span class="menu-icon">
                                         <i class="bi bi-grid fs-3"></i>
                                     </span>
-                                    <span class="menu-title">Dashboard</span>
+                                    <span class="menu-title">{{ __('lables.dashboard') }}</span>
                                 </a>
                             </div>
                             <div class="menu-item">
@@ -75,7 +75,7 @@
                                     <span class="menu-icon">
                                         <i class="bi bi-grid fs-3"></i>
                                     </span>
-                                    <span class="menu-title">Translations</span>
+                                    <span class="menu-title">{{ __('lables.translations') }}</span>
                                 </a>
                             </div>
                         </div>

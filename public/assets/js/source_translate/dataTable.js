@@ -60,7 +60,7 @@ var LanguageList = function() {
     }
 
 
-    $("div[translation-modal-action='close'], button[translation-modal-action='cancel']").on("click", function(e) {
+    $("div[add-translation-modal-action='close'], button[add-translation-modal-action='cancel']").on("click", function(e) {
         $("#update_translation_value_form").trigger("reset");
         $("#update_translation_value").modal("hide");
     });
@@ -159,7 +159,9 @@ var LanguageList = function() {
                                 if(response.success) {
                                     toastr.success(response.message ?? 'Phrases has been updated successfully')
                                 }
-                                $("#add_new_key_translation").modal('hide');
+                                $("#add_new_key_translation_form").trigger("reset");
+                                $("select[name=file]").val(null).trigger("change");
+                                $("#add_new_key_translation").modal("hide");
                                 datatable.ajax.reload(null, false);
                             },
                             error: function(response) {

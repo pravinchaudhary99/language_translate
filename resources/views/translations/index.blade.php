@@ -9,7 +9,7 @@
             <!--begin::Page title-->
             <div data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}" class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
                 <!--begin::Title-->
-                <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">Translations</h1>
+                <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">{{ __('lables.translations') }}</h1>
                 <!--end::Title-->
                 <!--begin::Separator-->
                 <span class="h-20px border-gray-200 border-start mx-4"></span>
@@ -18,7 +18,7 @@
                 <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
                     <!--begin::Item-->
                     <li class="breadcrumb-item text-muted">
-                        <a href="{{ route('home') }}" class="text-muted text-hover-primary">Home</a>
+                        <a href="{{ route('home') }}" class="text-muted text-hover-primary">{{ __('lables.home') }}</a>
                     </li>
                     <!--end::Item-->
                     <!--begin::Item-->
@@ -27,14 +27,14 @@
                     </li>
                     <!--end::Item-->
                     <!--begin::Item-->
-                    <li class="breadcrumb-item text-dark">Language List</li>
+                    <li class="breadcrumb-item text-dark">{{ __('lables.language') }} {{ __('lables.list') }}</li>
                     <!--end::Item-->
                 </ul>
                 <!--end::Breadcrumb-->
             </div>
             <!--end::Page title-->
             <div class="d-flex align-items-center py-1">
-                <button type="button" class="btn btn-sm btn-primary" id="publicTranslateFile">Publish</button>
+                <button type="button" class="btn btn-sm btn-primary" id="publicTranslateFile">{{ __('lables.publish') }}</button>
             </div>
         </div>
         <!--end::Container-->
@@ -60,7 +60,7 @@
                                 </svg>
                             </span>
                             <!--end::Svg Icon-->
-                            <input type="text" data-kt-language-table-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Search user" />
+                            <input type="text" data-kt-language-table-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="{{ __('lables.search') }}" />
                         </div>
                         <!--end::Search-->
                     </div>
@@ -78,7 +78,7 @@
                                     <rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="black" />
                                 </svg>
                             </span>
-                            <!--end::Svg Icon-->Add Language</button>
+                            <!--end::Svg Icon-->{{ __('lables.add_language') }}</button>
                             <!--end::Add user-->
                         </div>
                         <!--end::Toolbar-->
@@ -98,7 +98,7 @@
                                     <!--begin::Modal header-->
                                     <div class="modal-header" id="kt_modal_add_language_header">
                                         <!--begin::Modal title-->
-                                        <h2 class="fw-bolder">Add Language</h2>
+                                        <h2 class="fw-bolder">{{ __('lables.add_language') }}</h2>
                                         <!--end::Modal title-->
                                         <!--begin::Close-->
                                         <div class="btn btn-icon btn-sm btn-active-icon-primary" language-modal-action="close">
@@ -123,11 +123,11 @@
                                                 <!--begin::Input group-->
                                                 <div class="fv-row mb-7">
                                                     <!--begin::Label-->
-                                                    <label class="required fw-bold fs-6 mb-2">Select Language</label>
+                                                    <label class="required fw-bold fs-6 mb-2">{{ __('lables.select_language') }}</label>
                                                     <!--end::Label-->
                                                     @isset($languages)
-                                                    <select name="language" aria-label="Select a language" data-control="select2" data-placeholder="Select a Language..." class="form-select form-select-solid" id="languageSelect" data-dropdown-parent="#kt_modal_add_language">
-                                                        <option value="">Select a language</option>
+                                                    <select name="language" aria-label="Select a language" data-control="select2" data-placeholder="{{ __('lables.select_a_language') }}..." class="form-select form-select-solid" id="languageSelect" data-dropdown-parent="#kt_modal_add_language">
+                                                        <option value="">{{ __('lables.select_a_language') }}</option>
                                                         @foreach($languages as $language)
                                                             <option value="{{ $language->id }}">{{ $language->name ?? '-' }}</option>
                                                         @endforeach
@@ -139,10 +139,10 @@
                                             <!--end::Scroll-->
                                             <!--begin::Actions-->
                                             <div class="text-center pt-15">
-                                                <button type="button" class="btn btn-light me-3" language-modal-action="cancel">Discard</button>
+                                                <button type="button" class="btn btn-light me-3" language-modal-action="cancel">{{ __('lables.discard') }}</button>
                                                 <button type="button" class="btn btn-primary" id="languageFormSubmit">
-                                                    <span class="indicator-label">Submit</span>
-                                                    <span class="indicator-progress">Please wait...
+                                                    <span class="indicator-label">{{ __('lables.submit') }}</span>
+                                                    <span class="indicator-progress">{{ __('lables.please_wait') }}...
                                                     <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                                                 </button>
                                             </div>
@@ -169,10 +169,10 @@
                         <thead>
                             <!--begin::Table row-->
                             <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
-                                <th class="w-50px pe-2">SN</th>
-                                <th class="min-w-125px">Language Name</th>
-                                <th class="min-w-125px">Transition Progress</th>
-                                <th class="text-end min-w-100px">Actions</th>
+                                <th class="w-50px pe-2">{{ __('lables.sn') }}</th>
+                                <th class="min-w-125px">{{ __('lables.language_name') }}</th>
+                                <th class="min-w-125px">{{ __('lables.translation_progress') }}</th>
+                                <th class="text-end min-w-100px">{{ __('lables.action') }}</th>
                             </tr>
                             <!--end::Table row-->
                         </thead>

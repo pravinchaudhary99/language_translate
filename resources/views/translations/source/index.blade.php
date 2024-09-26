@@ -9,7 +9,7 @@
             <!--begin::Page title-->
             <div data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}" class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
                 <!--begin::Title-->
-                <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">Translations</h1>
+                <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">{{ __('lables.translations') }}</h1>
                 <!--end::Title-->
                 <!--begin::Separator-->
                 <span class="h-20px border-gray-200 border-start mx-4"></span>
@@ -18,7 +18,7 @@
                 <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
                     <!--begin::Item-->
                     <li class="breadcrumb-item text-muted">
-                        <a href="{{ route('home') }}" class="text-muted text-hover-primary">Home</a>
+                        <a href="{{ route('home') }}" class="text-muted text-hover-primary">{{ __('lables.home') }}</a>
                     </li>
                     <!--end::Item-->
                     <!--begin::Item-->
@@ -28,20 +28,20 @@
                     <!--end::Item-->
                     <!--begin::Item-->
                     <li class="breadcrumb-item text-muted">
-                        <a href="{{ route('translations.index') }}" class="text-muted text-hover-primary">list</a>
+                        <a href="{{ route('translations.index') }}" class="text-muted text-hover-primary">{{ __('lables.list') }}</a>
                     </li>
                     <!--end::Item-->
                     <li class="breadcrumb-item">
                         <span class="bullet bg-gray-200 w-5px h-2px"></span>
                     </li>
 
-                    <li class="breadcrumb-item text-dark">Edit</li>
+                    <li class="breadcrumb-item text-dark">{{ __('lables.edit') }}</li>
                 </ul>
                 <!--end::Breadcrumb-->
             </div>
             <!--end::Page title-->
             <div class="d-flex align-items-center py-1">
-                <button type="button" class="btn btn-sm btn-primary" id="publicTranslateFile">Publish</button>
+                <button type="button" class="btn btn-sm btn-primary" id="publicTranslateFile">{{ __('lables.publish') }}</button>
             </div>
         </div>
         <!--end::Container-->
@@ -66,7 +66,7 @@
                                 </svg>
                             </span>
                             <!--end::Svg Icon-->
-                            <input type="text" data-kt-translate-table-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Search..." />
+                            <input type="text" data-kt-translate-table-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="{{ __('lables.search') }}..." />
                         </div>
                         <!--end::Search-->
                     </div>
@@ -74,8 +74,8 @@
                     <!--begin::Card toolbar-->
                     <div class="card-toolbar">
                         <div class="me-3">
-                            <select name="files" class="form-select form-select-solid fw-bold" data-kt-select2="true" data-placeholder="Filter by file" data-allow-clear="true" data-hide-search="true" data-kt-translate-table-filter="file">
-                                <option value>Filter by file</option>
+                            <select name="files" class="form-select form-select-solid fw-bold" data-kt-select2="true" data-placeholder="{{ __('lables.filter_by_file') }}" data-allow-clear="true" data-hide-search="true" data-kt-translate-table-filter="file">
+                                <option value>{{ __('lables.filter_by_file') }}</option>
                                 @isset($files)
                                     @foreach($files as $file)
                                         <option value="{{ $file->id }}">{{ $file->name }}</option>
@@ -84,7 +84,7 @@
                             </select>
                         </div>
                         <div class="me-3">
-                            <button type="button" class="btn btn-primary" id="addNewKeySource"><i class="la fs-2 text-opacity-75 la-plus"></i>Add Key</button>
+                            <button type="button" class="btn btn-primary" id="addNewKeySource"><i class="la fs-2 text-opacity-75 la-plus"></i>{{ __('lables.add_key') }}</button>
                         </div>
                         <!--begin::Toolbar-->
                     </div>
@@ -99,10 +99,10 @@
                         <thead>
                             <!--begin::Table row-->
                             <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
-                                <th class="w-50px pe-2">SN</th>
-                                <th class="min-w-125px">Key</th>
-                                <th class="min-w-125px">String</th>
-                                <th class="text-end min-w-100px">Actions</th>
+                                <th class="w-50px pe-2">{{ __('lables.sn') }}</th>
+                                <th class="min-w-125px">{{ __('lables.key') }}</th>
+                                <th class="min-w-125px">{{ __('lables.string') }}</th>
+                                <th class="text-end min-w-100px">{{ __('lables.action') }}</th>
                             </tr>
                             <!--end::Table row-->
                         </thead>
@@ -126,7 +126,7 @@
                 <!--begin::Modal header-->
                 <div class="modal-header" id="update_translation_value_header">
                     <!--begin::Modal title-->
-                    <h2 class="fw-bolder">Edit</h2>
+                    <h2 class="fw-bolder">{{ __('lables.edit') }}</h2>
                     <!--end::Modal title-->
                     <!--begin::Close-->
                     <div class="btn btn-icon btn-sm btn-active-icon-primary" translation-modal-action="close">
@@ -151,23 +151,23 @@
                             <!--begin::Input group-->
                             <div class="fv-row mb-7">
                                 <!--begin::Label-->
-                                <label class="required fw-bold fs-6 mb-2">English Value</label>
+                                <label class="required fw-bold fs-6 mb-2">{{ __('lables.string') }}</label>
                                 <!--end::Label-->
                                 <span class="form-control form-control-solid" id="englishValue"></span>
                             </div>
                             <!--end::Input group-->
                             <div class="fv-row mb-7">
                                 <!--begin::Label-->
-                                <label class="required fw-bold fs-6 mb-2">Add value</label>
+                                <label class="required fw-bold fs-6 mb-2">{{ __('lables.content') }}</label>
                                 <!--end::Label-->
                                 <textarea class="form-control form-control-solid" name="value" id="translationValue" rows="3"></textarea>
                             </div>
                         </div>
                         <div class="text-center pt-15">
-                            <button type="button" class="btn btn-light me-3" translation-modal-action="cancel">Discard</button>
+                            <button type="button" class="btn btn-light me-3" translation-modal-action="cancel">{{ __('lables.discard') }}</button>
                             <button type="button" class="btn btn-primary" id="translationFormSubmit">
-                                <span class="indicator-label">Submit</span>
-                                <span class="indicator-progress">Please wait...
+                                <span class="indicator-label">{{ __('lables.submit') }}</span>
+                                <span class="indicator-progress">{{ __('lables.please_wait') }}...
                                 <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                             </button>
                         </div>
@@ -191,8 +191,8 @@
                 <div class="modal-header" id="add_new_key_translation_header">
                     <!--begin::Modal title-->
                     <div>
-                        <h2 class="fw-bolder">Add New Key</h2>
-                        <span>Add a new key to your source language.</span>
+                        <h2 class="fw-bolder">{{ __('lables.add_new_key') }}</h2>
+                        <span>{{ __('lables.add_new_key_span') }}</span>
                     </div>
                     <!--end::Modal title-->
                     <!--begin::Close-->
@@ -218,10 +218,10 @@
                             <!--begin::Input group-->
                             <div class="fv-row mb-7">
                                 <!--begin::Label-->
-                                <label class="required fw-bold fs-6 mb-2">Select file</label>
+                                <label class="required fw-bold fs-6 mb-2">{{ __('lables.select') }} {{ __('lables.file') }}</label>
                                 <!--end::Label-->
                                 <select name="file" class="form-select form-select-solid fw-bold" data-kt-select2="true" data-placeholder="Filter by file" data-allow-clear="true" data-hide-search="true">
-                                    <option value>Filter by file</option>
+                                    <option value>{{ __('lables.filter_by_file') }}</option>
                                     @isset($files)
                                         @foreach($files as $file)
                                             <option value="{{ $file->id }}">{{ $file->name }}</option>
@@ -232,22 +232,22 @@
                             <!--end::Input group-->
                             <div class="fv-row mb-7">
                                 <!--begin::Label-->
-                                <label class="required fw-bold fs-6 mb-2">Source key</label>
+                                <label class="required fw-bold fs-6 mb-2">{{ __('lables.source') }} {{ __('lables.key') }}</label>
                                 <!--end::Label-->
                                 <input class="form-control form-control-solid" placeholder="Enter key" name="key" />
                             </div>
                             <div class="fv-row mb-7">
                                 <!--begin::Label-->
-                                <label class="required fw-bold fs-6 mb-2">Source content</label>
+                                <label class="required fw-bold fs-6 mb-2">{{ __('lables.source') }} {{ __('lables.content') }}</label>
                                 <!--end::Label-->
                                 <textarea class="form-control form-control-solid" placeholder="Enter translation content for this key." name="content"></textarea>
                             </div>
                         </div>
                         <div class="text-center pt-15">
-                            <button type="button" class="btn btn-light me-3" add-translation-modal-action="cancel">Discard</button>
+                            <button type="button" class="btn btn-light me-3" add-translation-modal-action="cancel">{{ __('lables.discard') }}</button>
                             <button type="button" class="btn btn-primary" id="sourceTranslationFormSubmit">
-                                <span class="indicator-label">Submit</span>
-                                <span class="indicator-progress">Please wait...
+                                <span class="indicator-label">{{ __('lables.submit') }}</span>
+                                <span class="indicator-progress">{{ __('lables.please_wait') }}...
                                 <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                             </button>
                         </div>
