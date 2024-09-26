@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Translation;
 use Stichoza\GoogleTranslate\GoogleTranslate;
 
 if (! function_exists('getPhraseParameters')) {
@@ -82,5 +83,16 @@ if (! function_exists('setArrayValue')) {
         }
 
         return $array;
+    }
+}
+
+if(! function_exists('translateLanguage')) {
+    function translateLanguage(){
+        return Translation::with('language:id,name,code')->get()->map(function($query) {
+            return [
+                'name' => $query->language->name ?? '',
+                'code' => $query->language->code ?? ''
+            ];
+        });
     }
 }

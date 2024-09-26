@@ -49,7 +49,7 @@ class TranslationsManager
 
     public function getTranslations(string $locale) {
         if (blank($locale)) {
-            $locale = config('translations.source_language');
+            $locale = config('app.locale');
         }
 
         $translations = [];

@@ -22,7 +22,7 @@ class SyncPhrasesAction
 
         $translation = Translation::firstOrCreate([
             'language_id' => $language->id,
-            'source' => config('translations.source_language') === $locale,
+            'source' => config('app.local') === $locale,
         ]);
 
         $isRoot = $file === $locale.'.json' || $file === $locale.'.php';

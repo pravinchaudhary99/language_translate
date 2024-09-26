@@ -1,11 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\PhraseController;
+use App\Http\Middleware\LanguageMiddleware;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\TranslationController;
 use App\Http\Controllers\SourcePhraseController;
-
 
 Route::get('/', function() {
     return view('dashboard.index');
@@ -41,3 +42,12 @@ Route::prefix('translations')->as('translations.')->middleware('auth')->group(fu
     });
     Route::post('/public', [TranslationController::class, 'public'])->name('public');
 });
+
+Route::get('/switch-locale', function (Illuminate\Http\Request $request) {
+    $locale = $request->query('locale', 'en');
+    Session::forget('locale');
+
+    session()->put('locale', $locale);
+
+    return redirect()->back()->with('success', 'Locale switched successfully.');
+})->name('locale.switch')->middleware([LanguageMiddleware::class]);

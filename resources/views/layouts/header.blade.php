@@ -39,7 +39,7 @@
                 data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_aside_mobile_toggle">
                 <div class="aside-logo flex-column-auto" id="kt_aside_logo">
                     <a href="">
-                        <img alt="Logo" src="assets/media/logos/logo-demo13.svg" class="h-15px logo" />
+                        <img alt="Logo" src="{{ asset('assets/media/logos/logo-demo13.svg') }}" class="h-15px logo" />
                     </a>
                     <div id="kt_aside_toggle" class="btn btn-icon w-auto px-0 btn-active-color-primary aside-toggle"
                         data-kt-toggle="true" data-kt-toggle-state="active" data-kt-toggle-target="body"
@@ -63,7 +63,7 @@
                         <div class="menu menu-column menu-title-gray-800 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-500"
                             id="#kt_aside_menu" data-kt-menu="true">
                             <div class="menu-item">
-                                <a class="menu-link" href="">
+                                <a class="menu-link @if(Request::is('/')) active @endif" href="{{ route('home') }}">
                                     <span class="menu-icon">
                                         <i class="bi bi-grid fs-3"></i>
                                     </span>
@@ -71,7 +71,7 @@
                                 </a>
                             </div>
                             <div class="menu-item">
-                                <a class="menu-link active" href="{{ route('translations.index') }}">
+                                <a class="menu-link @if(Request::is('*translations*')) active @endif" href="{{ route('translations.index') }}">
                                     <span class="menu-icon">
                                         <i class="bi bi-grid fs-3"></i>
                                     </span>
@@ -92,8 +92,8 @@
                             </div>
                         </div>
                         <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
-                            <a href="../../demo13/dist/index.html" class="d-lg-none">
-                                <img alt="Logo" src="assets/media/logos/logo-demo13-compact.svg" class="h-25px" />
+                            <a href="{{ route('home') }}" class="d-lg-none">
+                                <img alt="Logo" src="{{ asset('assets/media/logos/logo-demo13-compact.svg') }}" class="h-25px" />
                             </a>
                         </div>
                         <div class="d-flex align-items-stretch justify-content-between flex-lg-grow-1">
@@ -106,90 +106,45 @@
                                         <div class="topbar-item cursor-pointer symbol px-3 px-lg-5 me-n3 me-lg-n5 symbol-30px symbol-md-35px"
                                             data-kt-menu-trigger="click" data-kt-menu-attach="parent"
                                             data-kt-menu-placement="bottom-end" data-kt-menu-flip="bottom">
-                                            <img src="assets/media/avatars/150-2.jpg" alt="metronic" />
+                                            <img src="{{ asset('assets/media/avatars/150-2.jpg') }}" alt="metronic" class="rounded" />
                                         </div>
                                         <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-primary fw-bold py-4 fs-6 w-275px"
                                             data-kt-menu="true">
                                             <div class="menu-item px-3">
                                                 <div class="menu-content d-flex align-items-center px-3">
                                                     <div class="symbol symbol-50px me-5">
-                                                        <img alt="Logo" src="assets/media/avatars/150-26.jpg" />
+                                                        <img alt="Logo" src="{{ asset('assets/media/avatars/150-26.jpg') }}" class="rounded"/>
                                                     </div>
                                                     <div class="d-flex flex-column">
-                                                        <div class="fw-bolder d-flex align-items-center fs-5">Max Smith
-                                                            <span
-                                                                class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2">Pro</span>
+                                                        <div class="fw-bolder d-flex align-items-center fs-5">{{ auth()->user()->name ?? '' }}
                                                         </div>
-                                                        <a href="#"
-                                                            class="fw-bold text-muted text-hover-primary fs-7">max@kt.com</a>
+                                                        <apn class="fw-bold text-muted text-hover-primary fs-7">{{ auth()->user()->email ?? '' }}</span>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="separator my-2"></div>
                                             <div class="menu-item px-5">
-                                                <a href="" class="menu-link px-5">My Profile</a>
+                                                <a href="" class="menu-link px-5">{{ __('lables.my_profile') }}</a>
                                             </div>
                                             <div class="menu-item px-5" data-kt-menu-trigger="hover"
                                                 data-kt-menu-placement="left-start">
-                                                <a href="#" class="menu-link px-5">
-                                                    <span class="menu-title position-relative">Language
-                                                        <span
-                                                            class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0">English
-                                                            <img class="w-15px h-15px rounded-1 ms-2"
-                                                                src="assets/media/flags/united-states.svg"
-                                                                alt="" /></span></span>
+                                                <a href="javascript:void(0);" class="menu-link px-5">
+                                                    <span class="menu-title position-relative">{{ __('lables.language') }} <span class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0 selected-lang-name">English</span></span>
                                                 </a>
                                                 <div class="menu-sub menu-sub-dropdown w-175px py-4">
+                                                    @foreach(translateLanguage() as $translate)
                                                     <div class="menu-item px-3">
-                                                        <a href="../../demo13/dist/account/settings.html"
-                                                            class="menu-link d-flex px-5 active">
-                                                            <span class="symbol symbol-20px me-4">
-                                                                <img class="rounded-1"
-                                                                    src="assets/media/flags/united-states.svg"
-                                                                    alt="" />
-                                                            </span>English</a>
+                                                        <a href="javascript:void(0);"
+                                                            class="menu-link d-flex px-5 languageSelected @if(session('locale') == $translate['code']) active @endif" data-locale="{{ $translate['code'] }}">
+                                                            {{ $translate['name'] }}
+                                                        </a>
                                                     </div>
-                                                    <div class="menu-item px-3">
-                                                        <a href="../../demo13/dist/account/settings.html"
-                                                            class="menu-link d-flex px-5">
-                                                            <span class="symbol symbol-20px me-4">
-                                                                <img class="rounded-1"
-                                                                    src="assets/media/flags/spain.svg"
-                                                                    alt="" />
-                                                            </span>Spanish</a>
-                                                    </div>
-                                                    <div class="menu-item px-3">
-                                                        <a href="../../demo13/dist/account/settings.html"
-                                                            class="menu-link d-flex px-5">
-                                                            <span class="symbol symbol-20px me-4">
-                                                                <img class="rounded-1"
-                                                                    src="assets/media/flags/germany.svg"
-                                                                    alt="" />
-                                                            </span>German</a>
-                                                    </div>
-                                                    <div class="menu-item px-3">
-                                                        <a href="../../demo13/dist/account/settings.html"
-                                                            class="menu-link d-flex px-5">
-                                                            <span class="symbol symbol-20px me-4">
-                                                                <img class="rounded-1"
-                                                                    src="assets/media/flags/japan.svg"
-                                                                    alt="" />
-                                                            </span>Japanese</a>
-                                                    </div>
-                                                    <div class="menu-item px-3">
-                                                        <a href="../../demo13/dist/account/settings.html"
-                                                            class="menu-link d-flex px-5">
-                                                            <span class="symbol symbol-20px me-4">
-                                                                <img class="rounded-1"
-                                                                    src="assets/media/flags/france.svg"
-                                                                    alt="" />
-                                                            </span>French</a>
-                                                    </div>
+                                                    @endforeach
                                                 </div>
                                             </div>
 
                                             <div class="menu-item px-5">
-                                                <a href="" class="menu-link px-5">Sign Out</a>
+                                                <a href="{{ route('logout') }}" class="menu-link px-5">{{ __('lables.sign_out') }}</a>
                                             </div>
                                         </div>
                                     </div>
@@ -229,6 +184,17 @@
     <script src="{{ asset('assets/js/custom/modals/upgrade-plan.js') }}"></script>
     <script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
     @yield('scripts')
+    <script>
+        $(document).ready(function() {
+            var langName = $(".languageSelected.active").text().trim();
+            $(".selected-lang-name").text(langName);
+
+            $(".languageSelected").on("click", function() {
+                var locale = $(this).attr("data-locale");
+                window.location.href = "{{ route('locale.switch') }}?locale="+locale;
+            });
+        });
+    </script>
 </body>
 
 </html>
