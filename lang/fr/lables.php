@@ -45,4 +45,5 @@ return array (
   'source' => 'Source',
   'copy' => 'Copie',
   'add_new_key_span' => 'Ajoutez une nouvelle clé à votre langue source.',
+  'auto_translate' => 'Traduction automatique',
 );
