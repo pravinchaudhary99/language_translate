@@ -117,6 +117,26 @@ var LanguageList = function() {
        });
     });
 
+    $("#autoTranslateAllValue").on("click", function() {
+        var id = $(this).attr("data-id");
+        $.ajax({
+            method: "POST",
+            url: "/translations/auto-translate/"+id,
+            success: function(response) {
+                if(response.success) {
+                    toastr.success(response.message ?? 'Auto translate value in progress')
+                }
+                setTimeout(() => {
+                    location.href = '/translations'
+                }, 2000);
+            },
+            error: function(response) {
+                const errorMessage = getErrorMessage(response);
+                toastr.error(errorMessage);
+            }
+       });
+    })
+
     var handleForm = function() {
         // Initialize form validation
         var formElement = document.getElementById('update_translation_value_form');

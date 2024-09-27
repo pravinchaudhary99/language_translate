@@ -8,5 +8,7 @@ interface TranslationInterface
 
     public function store();
 
+    public function autoTranslation($id);
+
     public function destroy($id);
 }

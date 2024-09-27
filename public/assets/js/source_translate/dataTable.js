@@ -1,7 +1,6 @@
 var LanguageList = function() {
     var initTable = function() {
         var table = $('#translationListTable');
-        var id = table.attr('data-id');
         // begin first table
         datatable = table.DataTable({
             scrollX: true,
@@ -10,7 +9,7 @@ var LanguageList = function() {
             serverSide: true,
             order: [1, 'asc'],
             ajax: {
-                url: '/translations/phrases/list/'+id,
+                url: '/translations/source-translation/list',
                 type: 'post',
                 data: function(d) {
                     d.file = $('select[data-kt-translate-table-filter="file"]').val();

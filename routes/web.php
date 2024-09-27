@@ -23,7 +23,7 @@ Route::prefix('translations')->as('translations.')->middleware('auth')->group(fu
     Route::get('/', [TranslationController::class, 'index'])->name('index');
     Route::post('/list', [TranslationController::class, 'list'])->name('list');
     Route::post('/store', [TranslationController::class, 'store'])->name('store');
-
+    Route::post('/auto-translate/{id}', [TranslationController::class, 'autoTranslation'])->name('auto-translation');
     Route::delete('/destroy/{id}', [TranslationController::class, 'destroy'])->name('destroy');
 
     Route::prefix('phrases')->as('phrases.')->group(function() {

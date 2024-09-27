@@ -40,10 +40,20 @@ class TranslationController extends Controller
             $responses = $this->repo->store();
 
             if(!$responses['success']) {
-                return response()->json(['error' => 'Language not found'], 400);
+                return response()->json(['error' => __('messages.language_not_found')], 400);
             }
             
-            return response()->json(['success' => true, 'message' => 'Translation has been added successfully'], 200);
+            return response()->json(['success' => true, 'message' => __('messages.translation_created')], 200);
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage());
+        }
+    }
+
+    public function autoTranslation($id) {
+        try {
+            $responses = $this->repo->autoTranslation($id);
+
+            return response()->json(['success' => true, 'message' => __('messages.auto_translate_completed')], 200);
         } catch (\Exception $e) {
             return response()->json($e->getMessage());
         }
@@ -54,10 +64,10 @@ class TranslationController extends Controller
             $responses = $this->repo->destroy($id);
 
             if(!$responses['success']) {
-                return response()->json(['error' => 'Translation not found'], 500);
+                return response()->json(['error' => __('messages.translation_not_found')], 500);
             }
             
-            return response()->json(['success' => true, 'message' => 'Translation has been deleted successfully'], 200);
+            return response()->json(['success' => true, 'message' => __('messages.translation_deleted')], 200);
         } catch (\Exception $e) {
             return response()->json($e->getMessage());
         }
@@ -67,7 +77,7 @@ class TranslationController extends Controller
         try {
             app(TranslationsManager::class)->export();
 
-            return response()->json(['success' => true, 'message' => 'Translations have been exported successfully'], 200);
+            return response()->json(['success' => true, 'message' => __('messages.translation_exported')], 200);
         } catch (\Exception $e) {
             return response()->json($e->getMessage());
         }

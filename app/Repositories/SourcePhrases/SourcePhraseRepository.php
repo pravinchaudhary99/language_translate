@@ -44,7 +44,7 @@ class SourcePhraseRepository implements SourcePhraseInterface
         $skip = $this->request->start;
         $take = $this->request->length;
         $searchValue = $this->request->search['value'];
-        $translationFile = $this->request->translationFile ?? null;
+        $translationFile = $this->request->file ?? null;
         $status = $this->request->status ?? null;
 
         $source = Translation::where('source', true)->first();

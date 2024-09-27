@@ -86,9 +86,12 @@
                         <div class="me-3">
                             <select name="translated" class="form-select form-select-solid fw-bold" data-kt-select2="true" data-placeholder="{{ __('lables.filter_by_status') }}" data-allow-clear="true" data-hide-search="true" data-kt-translate-table-filter="status">
                                 <option value>{{ __('lables.filter_by_status') }}</option>
-                                <option value="Translated">{{ __('lables.translated') }}</option>
+                                <option value="translated">{{ __('lables.translated') }}</option>
                                 <option value="untranslated">{{ __('lables.untranslated') }}</option>
                             </select>
+                        </div>
+                        <div class="me-3">
+                           <button type="button" class="btn btn-primary" data-id="{{ $translation->id ?? 0 }}" id="autoTranslateAllValue">{{ __('lables.auto_translate') }}</button>
                         </div>
                         <!--begin::Toolbar-->
                     </div>

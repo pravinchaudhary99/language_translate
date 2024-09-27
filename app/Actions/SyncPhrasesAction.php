@@ -20,10 +20,14 @@ class SyncPhrasesAction
             exit;
         }
 
-        $translation = Translation::firstOrCreate([
-            'language_id' => $language->id,
-            'source' => config('app.local') === $locale,
-        ]);
+        $translation = Translation::where('language_id', $language->id)->first();
+        
+        if(! $translation) {
+            $translation = Translation::firstOrCreate([
+                'language_id' => $language->id,
+                'source' => config('app.local') === $locale,
+            ]);
+        }
 
         $isRoot = $file === $locale.'.json' || $file === $locale.'.php';
         $extension = pathinfo($file, PATHINFO_EXTENSION);

@@ -42,7 +42,7 @@ class SourcePhraseController extends Controller
                 return response()->json(['errors', $responses['errors'] ?? 'Something went wrong'], 500);
             }
 
-            return response()->json(['message' => 'Source translate has been created successfully']);
+            return response()->json(['message' => __('messages.source_translate_created')]);
         } catch (\Exception $e) {
             return response()->json(['errors', $e->getMessage()], 500);
         }

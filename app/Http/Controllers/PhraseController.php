@@ -2,10 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Phrase;
-use App\Models\Translation;
-use Illuminate\Http\Request;
-use App\Models\TranslationFile;
 use App\Repositories\Phrases\PhraseInterface;
 
 class PhraseController extends Controller
@@ -42,9 +38,9 @@ class PhraseController extends Controller
             $responses = $this->repo->update($id);
 
             if(!$responses['success']) {
-                return response()->json(['errors', 'Phrases data not fount'], 500);
+                return response()->json(['errors', __('messages.translation_not_found')], 500);
             }
-            return response()->json(['message' => 'Phrases has been updated successfully']);
+            return response()->json(['message' => __('messages.phrase_updated')],200);
         } catch (\Exception $e) {
             return response()->json(['errors', $e->getMessage()], 500);
         }
@@ -55,7 +51,7 @@ class PhraseController extends Controller
             $responses = $this->repo->translate($id);
 
             if(!$responses['success']) {
-                return response()->json(['errors', 'Phrases data not fount'], 500);
+                return response()->json(['errors', __('messages.translation_not_found')], 500);
             }
 
             $data = $responses['data'];

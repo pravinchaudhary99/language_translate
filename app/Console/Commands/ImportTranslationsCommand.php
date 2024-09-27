@@ -70,35 +70,32 @@ class ImportTranslationsCommand extends Command
             }
         }
 
-        if ($locale === config('app.locale')) {
-            return;
-        }
-
-        $this->syncMissingTranslations($translation, $locale);
+        $this->syncMissingTranslations($translation);
     }
 
-    public function syncMissingTranslations(Translation $source, string $locale)
+    public function syncMissingTranslations(Translation $source)
     {
-        $language = Language::where('code', $locale)->first();
-
-        $translation = Translation::firstOrCreate([
-            'language_id' => $language->id,
-            'source' => false,
-        ]);
-
-        $source->load('phrases.translation', 'phrases.file');
-
-        $source->phrases->each(function ($phrase) use ($translation, $locale) {
-            if (! $translation->phrases()->where('key', $phrase->key)->first()) {
-                $fileName = $phrase->file->name.'.'.$phrase->file->extension;
-
-                if ($phrase->file->name === config('app.locale')) {
-                    $fileName = Str::replaceStart(config('app.locale').'.', "{$locale}.", $fileName);
-                } else {
-                    $fileName = Str::replaceStart(config('app.locale').'/', "{$locale}/", $fileName);
+        $translations = Translation::query()
+                    ->with('language')
+                    ->whereHas('language', function ($query) {
+                        $query->where('code', '!=', config('app.locale'));
+                    })
+                    ->get();
+        foreach ($translations as $translation) {
+            $source->load('phrases.translation', 'phrases.file');
+            $locale = $translation->language->code;
+            $source->phrases()->each(function ($phrase) use ($translation, $locale) {
+                if (! $translation->phrases()->where('key', $phrase->key)->first()) {
+                    $fileName = $phrase->file->name.'.'.$phrase->file->extension;
+    
+                    if ($phrase->file->name === config('app.locale')) {
+                        $fileName = Str::replaceStart(config('app.locale').'.', "{$locale}.", $fileName);
+                    } else {
+                        $fileName = Str::replaceStart(config('app.locale').'/', "{$locale}/", $fileName);
+                    }
+                    SyncPhrasesAction::execute($phrase->translation, $phrase->key, '', $locale, $fileName);
                 }
-                SyncPhrasesAction::execute($phrase->translation, $phrase->key, '', $locale, $fileName);
-            }
-        });
+            });
+        }
     }
 }

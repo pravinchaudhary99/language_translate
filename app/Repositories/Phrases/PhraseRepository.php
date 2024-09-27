@@ -42,7 +42,7 @@ class PhraseRepository implements PhraseInterface
         $skip = $this->request->start;
         $take = $this->request->length;
         $searchValue = $this->request->search['value'];
-        $translationFile = $this->request->translationFile ?? null;
+        $translationFile = $this->request->file ?? null;
         $status = $this->request->status ?? null;
 
         $translation = Translation::find($id);

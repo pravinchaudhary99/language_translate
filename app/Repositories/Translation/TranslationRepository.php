@@ -6,7 +6,7 @@ use App\Models\Language;
 use App\Models\Translation;
 use Illuminate\Http\Request;
 use App\Models\TranslationFile;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Artisan;
 use App\Repositories\Translation\TranslationInterface;
 
 class TranslationRepository implements TranslationInterface
@@ -25,6 +25,7 @@ class TranslationRepository implements TranslationInterface
         $skip = $this->request->start;
         $take = $this->request->length;
         $searchValue = $this->request->search['value'];
+        $file = $this->request->file ?? null;
         $columns = ['id', 'created_at'];
 
         $translations = Translation::query()
@@ -69,6 +70,12 @@ class TranslationRepository implements TranslationInterface
         $translation = Translation::updateOrCreate(['language_id' => $language], ['source' => false]);
         $this->connectPhases($translation);
 
+        $this->responsesData['success'] = true;
+        return $this->responsesData;
+    }
+
+    public function autoTranslation($id) {
+        Artisan::call('translations:auto-translate', ['translateId' => $id]);
         $this->responsesData['success'] = true;
         return $this->responsesData;
     }
