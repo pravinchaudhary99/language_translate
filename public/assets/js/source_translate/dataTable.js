@@ -141,6 +141,7 @@ var LanguageList = function() {
     
         document.getElementById("sourceTranslationFormSubmit").addEventListener("click", function(e) {
             e.preventDefault();
+            var submitButton = this;
             var values = {
                 'file' : $("select[name='file'] option:selected").val(),
                 "key" : $("input[name='key']").val(),
@@ -154,6 +155,9 @@ var LanguageList = function() {
                             method: "POST",
                             url: "/translations/source-translation/store",
                             data: values,
+                            beforeSend: function() {
+                                submitButton.setAttribute("data-kt-indicator", "on");
+                            },
                             success: function(response) {
                                 if(response.success) {
                                     toastr.success(response.message ?? 'Phrases has been updated successfully')
@@ -166,6 +170,9 @@ var LanguageList = function() {
                             error: function(response) {
                                 const errorMessage = getErrorMessage(response);
                                 toastr.error(errorMessage);
+                            },
+                            complete: function(){
+                                submitButton.setAttribute("data-kt-indicator", "off");
                             }
                        });
                        

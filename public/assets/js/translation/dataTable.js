@@ -117,7 +117,7 @@ var LanguageList = function() {
                     'language': {
                         validators: {
                             notEmpty: {
-                                message: 'Language name is required' // Updated message
+                                message: 'Language name is required'
                             },
                         }
                     },
@@ -135,6 +135,7 @@ var LanguageList = function() {
     
         document.getElementById("languageFormSubmit").addEventListener("click", function(e) {
             e.preventDefault();
+            var submitButton = this;
             var language = $("select[name=language] option:selected").val();
             if (validator) {
                 validator.validate().then(function(status) {
@@ -143,6 +144,9 @@ var LanguageList = function() {
                             method: "POST",
                             url: "/translations/store",
                             data: { "language" : language},
+                            beforeSend: function() {
+                                submitButton.setAttribute("data-kt-indicator", "on");
+                            },
                             success: function(response) {
                                 if(response.success) {
                                     toastr.success(response.message ?? 'Language has been updated successfully')
@@ -155,6 +159,9 @@ var LanguageList = function() {
                             error: function(response) {
                                 const errorMessage = getErrorMessage(response);
                                 toastr.error(errorMessage);
+                            },
+                            complete: function(){
+                                submitButton.setAttribute("data-kt-indicator", "off");
                             }
                        });
                        
