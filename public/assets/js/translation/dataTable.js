@@ -8,6 +8,11 @@ var LanguageList = function() {
             searchDelay: 500,
             processing: true,
             serverSide: true,
+            language: {
+                processing: translations.processing,
+                info: translations.info,
+                infoEmpty: translations.infoEmpty,
+            },
             order: [1, 'asc'],
             ajax: {
                 url: '/translations/list',
@@ -26,10 +31,16 @@ var LanguageList = function() {
                             return data + ' source keys';
                         }
                         var progress = parseInt(full.progress ?? 0);
-                       
-                        var line = `<div class="progress h-5px w-100">
-                            <div class="progress-bar bg-primary" role="progressbar" style="width: ${progress}%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>`;
+                        var line = '';
+                        if(progress < 100){
+                            line = `<div class="progress h-5px w-100">
+                                <div class="progress-bar bg-info" role="progressbar" style="width: ${progress}%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>`;
+                        }else{
+                            line = `<div class="progress h-5px w-100">
+                                <div class="progress-bar bg-primary" role="progressbar" style="width: ${progress}%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>`;
+                        }
                         return line;
                     }
                 },

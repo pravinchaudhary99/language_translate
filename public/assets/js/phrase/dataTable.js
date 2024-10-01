@@ -9,6 +9,11 @@ var LanguageList = function() {
             processing: true,
             serverSide: true,
             order: [1, 'asc'],
+            language: {
+                processing: translations.processing,
+                info: translations.info,
+                infoEmpty: translations.infoEmpty,
+            },
             ajax: {
                 url: '/translations/phrases/list/'+id,
                 type: 'post',
@@ -119,6 +124,7 @@ var LanguageList = function() {
 
     $("#autoTranslateAllValue").on("click", function() {
         var id = $(this).attr("data-id");
+        this.setAttribute("data-kt-indicator", "on")
         $.ajax({
             method: "POST",
             url: "/translations/auto-translate/"+id,
@@ -128,6 +134,7 @@ var LanguageList = function() {
                 }
                 setTimeout(() => {
                     location.href = '/translations'
+                    this.setAttribute("data-kt-indicator", "off")
                 }, 2000);
             },
             error: function(response) {

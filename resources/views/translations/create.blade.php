@@ -91,7 +91,11 @@
                             </select>
                         </div>
                         <div class="me-3">
-                           <button type="button" class="btn btn-primary" data-id="{{ $translation->id ?? 0 }}" id="autoTranslateAllValue">{{ __('lables.auto_translate') }}</button>
+                           <button type="button" class="btn btn-primary" data-id="{{ $translation->id ?? 0 }}" id="autoTranslateAllValue">
+                                <span class="indicator-label">{{ __('lables.auto_translate') }}</span>
+                                <span class="indicator-progress">{{ __('lables.please_wait') }}...
+                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                           </button>
                         </div>
                         <!--begin::Toolbar-->
                     </div>

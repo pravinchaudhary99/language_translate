@@ -4765,6 +4765,7 @@ fieldset:disabled .btn {
     color: #fff;
     background-color: #009ef7;
     border-color: transparent;
+    border-radius: 5px;
 }
 .page-item.disabled .page-link {
     color: #b5b5c3;

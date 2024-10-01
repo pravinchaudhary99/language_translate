@@ -7,6 +7,11 @@ var LanguageList = function() {
             searchDelay: 500,
             processing: true,
             serverSide: true,
+            language: {
+                processing: translations.processing,
+                info: translations.info,
+                infoEmpty: translations.infoEmpty,
+            },
             order: [1, 'asc'],
             ajax: {
                 url: '/translations/source-translation/list',
