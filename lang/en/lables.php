@@ -46,4 +46,6 @@ return array (
   'copy' => 'Copy',
   'add_new_key_span' => 'Add a new key to your source language.',
   'auto_translate' => 'Auto Translate',
+  'select' => 'select',
+  'content' => 'Content',
 );

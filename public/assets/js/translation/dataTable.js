@@ -128,7 +128,7 @@ var LanguageList = function() {
                     'language': {
                         validators: {
                             notEmpty: {
-                                message: 'Language name is required'
+                                message: messages.required.replace(':attribute', $("#languageSelect").attr('data-label'))
                             },
                         }
                     },

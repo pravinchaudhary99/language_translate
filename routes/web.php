@@ -39,6 +39,7 @@ Route::prefix('translations')->as('translations.')->middleware('auth')->group(fu
         Route::post('/list', [SourcePhraseController::class, 'list'])->name('list');
 
         Route::post('/store', [SourcePhraseController::class, 'store'])->name('store');
+        Route::post('/update/{id}', [SourcePhraseController::class, 'update'])->name('update');
     });
     Route::post('/public', [TranslationController::class, 'public'])->name('public');
 });

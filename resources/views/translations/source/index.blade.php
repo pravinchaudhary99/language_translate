@@ -220,7 +220,7 @@
                                 <!--begin::Label-->
                                 <label class="required fw-bold fs-6 mb-2">{{ __('lables.select') }} {{ __('lables.file') }}</label>
                                 <!--end::Label-->
-                                <select name="file" class="form-select form-select-solid fw-bold" data-kt-select2="true" data-placeholder="Filter by file" data-allow-clear="true" data-hide-search="true">
+                                <select name="file" class="form-select form-select-solid fw-bold" data-label="{{ __('lables.source') }} {{ __('lables.file') }}" data-kt-select2="true" data-placeholder="Filter by file" data-allow-clear="true" data-hide-search="true">
                                     <option value>{{ __('lables.filter_by_file') }}</option>
                                     @isset($files)
                                         @foreach($files as $file)
@@ -234,13 +234,13 @@
                                 <!--begin::Label-->
                                 <label class="required fw-bold fs-6 mb-2">{{ __('lables.source') }} {{ __('lables.key') }}</label>
                                 <!--end::Label-->
-                                <input class="form-control form-control-solid" placeholder="Enter key" name="key" />
+                                <input class="form-control form-control-solid" placeholder="Enter key" data-label="{{ __('lables.source') }} {{ __('lables.key') }}" name="key" />
                             </div>
                             <div class="fv-row mb-7">
                                 <!--begin::Label-->
                                 <label class="required fw-bold fs-6 mb-2">{{ __('lables.source') }} {{ __('lables.content') }}</label>
                                 <!--end::Label-->
-                                <textarea class="form-control form-control-solid" placeholder="Enter translation content for this key." name="content"></textarea>
+                                <textarea class="form-control form-control-solid" data-label="{{ __('lables.source') }} {{ __('lables.content') }}" placeholder="Enter translation content for this key." name="content"></textarea>
                             </div>
                         </div>
                         <div class="text-center pt-15">

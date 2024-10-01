@@ -153,7 +153,7 @@ var LanguageList = function() {
                     'value': {
                         validators: {
                             notEmpty: {
-                                message: 'Translate value is required'
+                                message: messages.required.replace(':attribute', $("#translationValue").attr('data-label'))
                             },
                         }
                     },

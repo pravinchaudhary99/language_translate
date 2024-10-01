@@ -127,7 +127,7 @@
                                                     <label class="required fw-bold fs-6 mb-2">{{ __('lables.select_language') }}</label>
                                                     <!--end::Label-->
                                                     @isset($languages)
-                                                    <select name="language" aria-label="Select a language" data-control="select2" data-placeholder="{{ __('lables.select_a_language') }}..." class="form-select form-select-solid" id="languageSelect" data-dropdown-parent="#kt_modal_add_language">
+                                                    <select name="language" data-label="{{ __('lables.language') }}" aria-label="Select a language" data-control="select2" data-placeholder="{{ __('lables.select_a_language') }}..." class="form-select form-select-solid" id="languageSelect" data-dropdown-parent="#kt_modal_add_language">
                                                         <option value="">{{ __('lables.select_a_language') }}</option>
                                                         @foreach($languages as $language)
                                                             <option value="{{ $language->id }}">{{ $language->name ?? '-' }}</option>

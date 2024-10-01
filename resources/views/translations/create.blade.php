@@ -171,7 +171,7 @@
                                 <!--begin::Label-->
                                 <label class="required fw-bold fs-6 mb-2">{{ __('lables.value') }}</label>
                                 <!--end::Label-->
-                                <textarea class="form-control form-control-solid" name="value" id="translationValue" rows="3"></textarea>
+                                <textarea class="form-control form-control-solid" name="value" data-label="{{ __('lables.value') }}" id="translationValue" rows="3"></textarea>
                             </div>
 
                             <div class="card shadow-sm border">

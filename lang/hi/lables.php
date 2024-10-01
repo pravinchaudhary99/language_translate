@@ -46,4 +46,6 @@ return array (
   'copy' => 'प्रतिलिपि',
   'add_new_key_span' => 'अपनी स्रोत भाषा में एक नई कुंजी जोड़ें.',
   'auto_translate' => 'स्वतः अनुवाद',
+  'select' => 'चुनना',
+  'content' => 'सामग्री',
 );

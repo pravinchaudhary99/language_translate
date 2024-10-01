@@ -9,5 +9,7 @@ interface SourcePhraseInterface
     public function list();
 
     public function store();
+
+    public function update($id);
 }
 

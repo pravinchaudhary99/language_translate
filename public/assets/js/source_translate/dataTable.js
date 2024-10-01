@@ -43,8 +43,9 @@ var LanguageList = function() {
                 orderable: false,
                 className: 'text-center',
                 render: function(data, type, full, meta) {
+                    
                     var action = `
-                    <a href="javascript:void(0);" class="btn btn-icon editTranslationButton" title="edit translation" data-id="${data}" data-key="${full.enValue}" data-value="${full.value ?? ''}"><i class="la fs-2 text-opacity-75 la-edit"></i></a>`;
+                    <a href="javascript:void(0);" class="btn btn-icon editTranslationButton" title="edit translation" data-id="${data}" data-key="${full.key}" data-value="${full.value ?? ''}"><i class="la fs-2 text-opacity-75 la-edit"></i></a>`;
                     return action;
                 }
 
@@ -64,9 +65,14 @@ var LanguageList = function() {
     }
 
 
-    $("div[add-translation-modal-action='close'], button[add-translation-modal-action='cancel']").on("click", function(e) {
+    $("div[translation-modal-action='close'], button[translation-modal-action='cancel']").on("click", function(e) {
         $("#update_translation_value_form").trigger("reset");
         $("#update_translation_value").modal("hide");
+    });
+
+    $("div[add-translation-modal-action='close'], button[add-translation-modal-action='cancel']").on("click", function(e) {
+        $("#add_new_key_translation_form").trigger("reset");
+        $("#add_new_key_translation").modal("hide");
     });
 
     $(document).on('click', '.editTranslationButton', function(e) {
@@ -114,21 +120,21 @@ var LanguageList = function() {
                     'file': {
                         validators: {
                             notEmpty: {
-                                message: 'File is required'
+                                message: messages.required.replace(':attribute', $("select[name=file]").attr('data-label'))
                             },
                         }
                     },
                     'key': {
                         validators: {
                             notEmpty: {
-                                message: 'Key is required'
+                                message: messages.required.replace(':attribute', $("input[name=key]").attr('data-label'))
                             },
                         }
                     },
                     'content': {
                         validators: {
                             notEmpty: {
-                                message: 'Content is required'
+                                message: messages.required.replace(':attribute', $("textarea[name=content]").attr('data-label'))
                             },
                         }
                     },
@@ -188,6 +194,67 @@ var LanguageList = function() {
             }
         });
     };
+
+    var formElementAdd = document.getElementById('add_new_key_translation_form');
+    var validatorAdd = FormValidation.formValidation(
+        formElementAdd, {
+            fields: {
+                'value': {
+                    validators: {
+                        notEmpty: {
+                            message: messages.required.replace(':attribute', $("select[name=file]").attr('data-label'))
+                        },
+                    }
+                },
+            },
+            plugins: {
+                trigger: new FormValidation.plugins.Trigger(),
+                bootstrap: new FormValidation.plugins.Bootstrap5({
+                    rowSelector: '.fv-row',
+                    eleInvalidClass: '',
+                    eleValidClass: ''
+                })
+            }
+        }
+    );
+
+    document.getElementById("translationFormSubmit").addEventListener("click", function(e) {
+        e.preventDefault();
+        var submitButton = this;
+        var value = $("#translationValue").val();
+        var id = $("#translationFormSubmit").attr("data-id");
+        if (validatorAdd) {
+            validatorAdd.validate().then(function(status) {
+                if (status === 'Valid') {
+                   $.ajax({
+                        method: "POST",
+                        url: "/translations/source-translation/update/"+id,
+                        data: { "value" : value},
+                        beforeSend: function() {
+                            submitButton.setAttribute("data-kt-indicator", "on");
+                        },
+                        success: function(response) {
+                            if(response.success) {
+                                toastr.success(response.message ?? 'Phrases has been updated successfully')
+                            }
+                            $("#update_translation_value").modal('hide');
+                            datatable.ajax.reload(null, false);
+                        },
+                        error: function(response) {
+                            const errorMessage = getErrorMessage(response);
+                            toastr.error(errorMessage);
+                        },
+                        complete: function(){
+                            submitButton.setAttribute("data-kt-indicator", "off");
+                        }
+                   });
+                   
+                } else {
+                    console.log("Form validation failed");
+                }
+            });
+        }
+    });
 
     function getErrorMessage(response) {
         if (!response || !response.responseJSON) {

@@ -47,4 +47,18 @@ class SourcePhraseController extends Controller
             return response()->json(['errors', $e->getMessage()], 500);
         }
     }
+
+    public function update($id) {
+        try {
+            $responses = $this->repo->update($id);
+
+            if(!$responses['success']) {
+                return response()->json(['errors', $responses['errors'] ?? 'Something went wrong'], 500);
+            }
+
+            return response()->json(['message' => __('messages.source_translate_updated')]);
+        } catch (\Exception $e) {
+            return response()->json(['errors', $e->getMessage()], 500);
+        }
+    }
 }

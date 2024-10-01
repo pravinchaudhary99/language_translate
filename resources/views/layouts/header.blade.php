@@ -179,6 +179,17 @@
     </div>
     <script>
         var hostUrl = "assets/";
+
+        //Language variables for datatable (global)
+        var translations = {
+            processing: @json(__('datatables.processing')),
+            search:  @json(__('datatables.search')),
+            info:  @json(__('datatables.info')),
+            infoEmpty:  @json(__('datatables.infoEmpty')),
+        };
+        var messages = {
+            'required' : @json(__('validation.required'))
+        };
     </script>
     <script src="{{ asset('assets/plugins/global/plugins.bundle.js') }}"></script>
     <script src="{{ asset('assets/js/scripts.bundle.js') }}"></script>
@@ -199,14 +210,6 @@
             });
 
         });
-        //Language variables for datatable (global)
-        var translations = {
-            processing: @json(__('datatables.processing')),
-            search:  @json(__('datatables.search')),
-            info:  @json(__('datatables.info')),
-            infoEmpty:  @json(__('datatables.infoEmpty')),
-        };
-        
     </script>
 </body>
 

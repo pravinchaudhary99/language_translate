@@ -116,4 +116,17 @@ class SourcePhraseRepository implements SourcePhraseInterface
         $this->responsesData['success'] = true;
         return $this->responsesData;
     }
+
+    public function update($id) {
+        $phrase = Phrase::where('uuid', $id)->first();
+
+        if(!$phrase) {
+            $this->responsesData['success'] = false;
+            return $this->responsesData; 
+        }
+
+        $phrase->update(['value' => $this->request->value ?? '']);
+        $this->responsesData['success'] = true;
+        return $this->responsesData;
+    }
 }
