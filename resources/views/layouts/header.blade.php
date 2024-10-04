@@ -78,6 +78,14 @@
                                     <span class="menu-title">{{ __('lables.translations') }}</span>
                                 </a>
                             </div>
+                            <div class="menu-item">
+                                <a class="menu-link @if(Request::is('*roles*')) active @endif" href="{{ route('roles.index') }}">
+                                    <span class="menu-icon">
+                                        <i class="bi bi-grid fs-3"></i>
+                                    </span>
+                                    <span class="menu-title">{{ __('lables.roles') }}</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>

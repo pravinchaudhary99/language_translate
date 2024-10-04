@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\PhraseController;
 use App\Http\Middleware\LanguageMiddleware;
 use App\Http\Controllers\Auth\LoginController;
@@ -42,6 +43,10 @@ Route::prefix('translations')->as('translations.')->middleware('auth')->group(fu
         Route::post('/update/{id}', [SourcePhraseController::class, 'update'])->name('update');
     });
     Route::post('/public', [TranslationController::class, 'public'])->name('public');
+});
+
+Route::prefix('roles')->as('roles.')->group(function() {
+    Route::get('/', [RoleController::class, 'index'])->name('index');
 });
 
 Route::get('/switch-locale', function (Illuminate\Http\Request $request) {

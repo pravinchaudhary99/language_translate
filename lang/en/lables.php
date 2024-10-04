@@ -48,4 +48,5 @@ return array (
   'auto_translate' => 'Auto Translate',
   'select' => 'select',
   'content' => 'Content',
+  'roles' => 'Roles',
 );

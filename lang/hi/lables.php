@@ -6,7 +6,7 @@ return array (
   'translations' => 'अनुवाद',
   'publish' => 'प्रकाशित करना',
   'add_language' => 'भाषा जोड़ें',
-  'search' => 'खोज',
+  'search' => 'खोज...',
   'language' => 'भाषा',
   'list' => 'सूची',
   'sn' => 'एस.एन.',
@@ -48,4 +48,5 @@ return array (
   'auto_translate' => 'स्वतः अनुवाद',
   'select' => 'चुनना',
   'content' => 'सामग्री',
+  'roles' => 'भूमिकाएँ',
 );

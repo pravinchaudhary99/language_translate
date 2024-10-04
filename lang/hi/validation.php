@@ -8,7 +8,7 @@ return array (
   'required_if_accepted' => ':other स्वीकृत होने पर :attribute फ़ील्ड आवश्यक है.',
   'required_if_declined' => ':other अस्वीकृत होने पर :attribute फ़ील्ड आवश्यक है.',
   'required_unless' => ':attribute फ़ील्ड तब तक आवश्यक है जब तक :other :values में न हो.',
-  'required_with' => ':values मौजूद होने पर :attribute फ़ील्ड आवश्यक है।',
+  'required_with' => ':values मौजूद होने पर :attribute फ़ील्ड आवश्यक है.',
   'required_with_all' => ':attribute फ़ील्ड की आवश्यकता तब होती है जब :values मौजूद हो।',
   'required_without' => ':attribute फ़ील्ड आवश्यक है जब :values मौजूद नहीं है।',
   'required_without_all' => ':attribute फ़ील्ड की आवश्यकता तब होती है जब :values में से कोई भी मौजूद नहीं है।',
