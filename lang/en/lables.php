@@ -49,4 +49,5 @@ return array (
   'select' => 'select',
   'content' => 'Content',
   'roles' => 'Roles',
+  'management' => 'Management',
 );

@@ -47,6 +47,8 @@ Route::prefix('translations')->as('translations.')->middleware('auth')->group(fu
 
 Route::prefix('roles')->as('roles.')->group(function() {
     Route::get('/', [RoleController::class, 'index'])->name('index');
+    Route::post('/store', [RoleController::class, 'store'])->name('store');
+    Route::post('/update/{id}', [RoleController::class, 'update'])->name('update');
 });
 
 Route::get('/switch-locale', function (Illuminate\Http\Request $request) {

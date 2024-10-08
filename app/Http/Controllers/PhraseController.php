@@ -27,9 +27,9 @@ class PhraseController extends Controller
             $responses = $this->repo->list($id);
 
             $data = $responses['data'];
-            return response()->json($data);
+            return responseDataTable($data);
         } catch (\Exception $e) {
-            return response()->json(['errors', $e->getMessage()], 500);
+            return errorResponses($e->getMessage());
         }
     }
 
@@ -38,11 +38,11 @@ class PhraseController extends Controller
             $responses = $this->repo->update($id);
 
             if(!$responses['success']) {
-                return response()->json(['errors', __('messages.translation_not_found')], 500);
+                return errorResponses(__('messages.translation_not_found'));
             }
-            return response()->json(['message' => __('messages.phrase_updated')],200);
+            return successResponses(__('messages.phrase_updated'));
         } catch (\Exception $e) {
-            return response()->json(['errors', $e->getMessage()], 500);
+            return errorResponses($e->getMessage());
         }
     }
 
@@ -51,13 +51,13 @@ class PhraseController extends Controller
             $responses = $this->repo->translate($id);
 
             if(!$responses['success']) {
-                return response()->json(['errors', __('messages.translation_not_found')], 500);
+                return errorResponses(__('messages.translation_not_found'));
             }
 
             $data = $responses['data'];
-            return response()->json($data);
+            return successResponses('', $data);
         } catch (\Exception $e) {
-            return response()->json(['errors', $e->getMessage()], 500);
+            return errorResponses($e->getMessage());
         }
     }
 }

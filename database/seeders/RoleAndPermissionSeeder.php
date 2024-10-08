@@ -36,7 +36,7 @@ class RoleAndPermissionSeeder extends Seeder
         }
 
         // Create roles
-        $role = Role::firstOrCreate(['name' => 'Admin', 'is_admin' => 1]);
+        $role = Role::firstOrCreate(['name' => 'Super Admin', 'is_admin' => 1]);
 
         $permissionIds = Permission::pluck('id')->toArray();
 

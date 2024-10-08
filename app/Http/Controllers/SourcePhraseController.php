@@ -28,9 +28,9 @@ class SourcePhraseController extends Controller
             $responses = $this->repo->list();
 
             $data = $responses['data'];
-            return response()->json($data);
+            return responseDataTable($data);
         } catch (\Exception $e) {
-            return response()->json(['errors', $e->getMessage()], 500);
+            return errorResponses($e->getMessage());
         }
     }
 
@@ -39,12 +39,12 @@ class SourcePhraseController extends Controller
             $responses = $this->repo->store();
 
             if(!$responses['success']) {
-                return response()->json(['errors', $responses['errors'] ?? 'Something went wrong'], 500);
+                return errorResponses($responses['errors'] ?? 'Something went wrong');
             }
 
-            return response()->json(['message' => __('messages.source_translate_created')]);
+            return successResponses(__('messages.source_translate_created'));
         } catch (\Exception $e) {
-            return response()->json(['errors', $e->getMessage()], 500);
+            return errorResponses($e->getMessage());
         }
     }
 
@@ -53,12 +53,12 @@ class SourcePhraseController extends Controller
             $responses = $this->repo->update($id);
 
             if(!$responses['success']) {
-                return response()->json(['errors', $responses['errors'] ?? 'Something went wrong'], 500);
+                return errorResponses($responses['errors'] ?? 'Something went wrong');
             }
 
-            return response()->json(['message' => __('messages.source_translate_updated')]);
+            return successResponses(__('messages.source_translate_updated'));
         } catch (\Exception $e) {
-            return response()->json(['errors', $e->getMessage()], 500);
+            return errorResponses($e->getMessage());
         }
     }
 }
