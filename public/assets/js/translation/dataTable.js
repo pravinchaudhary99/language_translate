@@ -165,7 +165,7 @@ var LanguageList = function() {
                                 $("#add_language_form").trigger("reset");
                                 $("#languageSelect").val(null).trigger("change");
                                 $("#kt_modal_add_language").modal("hide");
-                                datatable.ajax.reload(null, false);
+                                datatable.ajax.reload(null, true);
                             },
                             error: function(response) {
                                 const errorMessage = getErrorMessage(response);

@@ -86,6 +86,14 @@
                                     <span class="menu-title">{{ __('lables.roles') }}</span>
                                 </a>
                             </div>
+                            <div class="menu-item">
+                                <a class="menu-link @if(Request::is('*users*')) active @endif" href="{{ route('users.index') }}">
+                                    <span class="menu-icon">
+                                        <i class="bi bi-user fs-3"></i>
+                                    </span>
+                                    <span class="menu-title">{{ __('lables.users') }}</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>

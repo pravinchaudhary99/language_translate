@@ -50,4 +50,7 @@ return array (
   'content' => 'Content',
   'roles' => 'Roles',
   'management' => 'Management',
+  'users' => 'Users',
+  'add_a_role' => 'Add a role',
+  'edit_a_role' => 'Edit a role',
 );

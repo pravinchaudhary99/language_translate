@@ -4,11 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Models\Language;
 use App\TranslationsManager;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Routing\Controllers\HasMiddleware;
 use App\Repositories\Translation\TranslationInterface;
 
-class TranslationController extends Controller
+class TranslationController extends Controller implements HasMiddleware
 {
     protected $repo;
+
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permissions:language-list,language-create,language-edit', only: ['index', 'list', 'autoTranslation', 'public']),
+            new Middleware('permissions:language-create', only: ['store']),
+            new Middleware('permissions:language-delete', only: ['destroy']),
+        ];
+    }
 
     public function __construct(TranslationInterface $interface) {
         $this->repo = $interface;

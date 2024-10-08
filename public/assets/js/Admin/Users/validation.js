@@ -1,7 +1,6 @@
-var RoleValidation = function() {
+var userCreateForm = function() {
     var handleForm = function() {
-        // Initialize form validation
-        var formElement = document.getElementById('kt_modal_add_role_form');
+        var formElement = document.getElementById('add_user_form');
         var validator = FormValidation.formValidation(
             formElement, {
                 fields: {
@@ -12,10 +11,34 @@ var RoleValidation = function() {
                             },
                         }
                     },
-                    'permissions[]': {
+                    'email': {
                         validators: {
                             notEmpty: {
-                                message: messages.required.replace(':attribute', $("input[name='permissions[]']").attr('data-label'))
+                                message: messages.required.replace(':attribute', $("input[name=email]").attr('data-label'))
+                            },
+                        }
+                    },
+                    'role': {
+                        validators: {
+                            notEmpty: {
+                                message: messages.required.replace(':attribute', $("#userRoleSelect").attr('data-label'))
+                            },
+                        }
+                    },
+                    'password': {
+                        validators: {
+                            notEmpty: {
+                                message: messages.required.replace(':attribute', $("input[name=password]").attr('data-label'))
+                            },
+                        }
+                    },
+                    'password_confirmation': {
+                        validators: {
+                            identical: {
+                                compare: function () {
+                                    return formElement.querySelector('[name="password"]').value;
+                                },
+                                message: messages.required.replace(':attribute', $("input[name=password_confirmation]").attr('data-label'))
                             },
                         }
                     },
@@ -30,25 +53,19 @@ var RoleValidation = function() {
                 }
             }
         );
-    
-        document.getElementById("rolesAddSubmitButton").addEventListener("click", function(e) {
+
+        document.getElementById("userFormSubmit").addEventListener("click", function(e) {
             e.preventDefault();
             var submitButton = this;
-            var id = $("#rolesAddSubmitButton").attr('data-update');
-            var formData = new FormData($("#kt_modal_add_role_form")[0]);
-            
-            var url = "/roles/store";
-            if(id){
-                url = "/roles/update/"+id;
-            }
+            var data = new FormData($("#add_user_form")[0]);
 
             if (validator) {
                 validator.validate().then(function(status) {
                     if (status === 'Valid') {
-                       $.ajax({
+                    $.ajax({
                             method: "POST",
-                            url: url,
-                            data: formData,
+                            url: "/users/store",
+                            data: data,
                             processData: false,
                             contentType: false,
                             beforeSend: function() {
@@ -56,11 +73,12 @@ var RoleValidation = function() {
                             },
                             success: function(response) {
                                 if(response.success) {
-                                    toastr.success(response.message ?? 'Role has been updated successfully')
+                                    toastr.success(response.message ?? 'User has been updated successfully')
                                 }
-                                $("#kt_modal_add_role_form").trigger("reset");
-                                $("#kt_modal_add_role").modal("hide");
-                                location.reload();
+                                $("#add_user_form").trigger("reset");
+                                $("#userRoleSelect").val(null).trigger("change");
+                                $("#kt_modal_add_user").modal("hide");
+                                datatable.ajax.reload(null, true);
                             },
                             error: function(response) {
                                 const errorMessage = getErrorMessage(response);
@@ -69,8 +87,8 @@ var RoleValidation = function() {
                             complete: function(){
                                 submitButton.setAttribute("data-kt-indicator", "off");
                             }
-                       });
-                       
+                    });
+                    
                     } else {
                         console.log("Form validation failed");
                     }
@@ -78,15 +96,6 @@ var RoleValidation = function() {
             }
         });
     };
-
-    $(document).on("click", "#kt_modal_add_role #kt_roles_select_all", function() {
-        var modal = $("#kt_modal_add_role");
-        if(this.checked){
-            modal.find("input[name='permissions[]']").prop("checked",true);
-        }else{
-            modal.find("input[name='permissions[]']").prop("checked",false);
-        }
-    });
 
     function getErrorMessage(response) {
         if (!response || !response.responseJSON) {
@@ -105,43 +114,15 @@ var RoleValidation = function() {
     
         return 'Something went wrong';
     }
-    
-    $(document).on("click", "#kt_modal_add_role input[name='permissions[]']", function() {
-        const modal = $("#kt_modal_add_role");
-        const permissions = modal.find("input[name='permissions[]']");
-        const totalLength = permissions.length;
-        const checkedLength = permissions.filter(":checked").length;
-    
-        modal.find("#kt_roles_select_all").prop("checked", totalLength === checkedLength);
-    });
 
-    $(".editRoleAndPermission").on("click", function() {
-        const name = $(this).attr("data-role");
-        const id = $(this).attr("data-id");
-        const permissions = $(this).data("permissions");
-        const modal = $("#kt_modal_add_role");
-        const permissionsAll = modal.find("input[name='permissions[]']").length;
-        
-        modal.find("input[name=name]").val(name);
-        modal.find("input[name='permissions[]']").prop("checked", false);
-        permissions.forEach(element => {
-            modal.find(`input[name='permissions[]'][value='${element}']`).prop("checked", true);
-        });
-
-        $("#rolesAddSubmitButton").attr('data-update', id);
-        $(".addRole").addClass("d-none");
-        $(".editRole").removeClass("d-none");
-        
-        modal.find("#kt_roles_select_all").prop("checked", permissions.length === permissionsAll);
-    });
+    $("#userRoleSelect").select();
 
     return {
         init: function() {
             handleForm();
         }
-    }
+    };
 }();
-
 
 KTUtil.onDOMContentLoaded((function() {
     $.ajaxSetup({
@@ -149,5 +130,5 @@ KTUtil.onDOMContentLoaded((function() {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
         }
     });
-    RoleValidation.init()
+    userCreateForm.init()
 }));

@@ -3,11 +3,22 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Routing\Controllers\HasMiddleware;
 use App\Repositories\SourcePhrases\SourcePhraseInterface;
 
-class SourcePhraseController extends Controller
+class SourcePhraseController extends Controller implements HasMiddleware
 {
     protected $repo;
+
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permissions:translate-list,translate-create,translate-edit', only: ['index']),
+            new Middleware('permissions:translate-create', only: ['store']),
+            new Middleware('permissions:translate-edit', only: ['update']),
+        ];
+    }
 
     public function __construct(SourcePhraseInterface $interface) {
         $this->repo = $interface;

@@ -176,7 +176,7 @@ var LanguageList = function() {
                                 $("#add_new_key_translation_form").trigger("reset");
                                 $("select[name=file]").val(null).trigger("change");
                                 $("#add_new_key_translation").modal("hide");
-                                datatable.ajax.reload(null, false);
+                                datatable.ajax.reload(null, true);
                             },
                             error: function(response) {
                                 const errorMessage = getErrorMessage(response);

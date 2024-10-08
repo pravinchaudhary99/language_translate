@@ -8,6 +8,7 @@ use App\Http\Middleware\LanguageMiddleware;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\TranslationController;
 use App\Http\Controllers\SourcePhraseController;
+use App\Http\Controllers\UserManagementController;
 
 Route::get('/', function() {
     return view('dashboard.index');
@@ -49,6 +50,15 @@ Route::prefix('roles')->as('roles.')->group(function() {
     Route::get('/', [RoleController::class, 'index'])->name('index');
     Route::post('/store', [RoleController::class, 'store'])->name('store');
     Route::post('/update/{id}', [RoleController::class, 'update'])->name('update');
+});
+
+Route::prefix('users')->as('users.')->group(function() {
+    Route::get('/', [UserManagementController::class, 'index'])->name('index');
+    Route::post('/list', [UserManagementController::class, 'list'])->name('list');
+
+    Route::post('/store', [UserManagementController::class, 'store'])->name('store');
+    Route::get('/edit/{id}', [UserManagementController::class, 'edit'])->name('edit');
+    Route::post('/update/{id}', [UserManagementController::class, 'update'])->name('update');
 });
 
 Route::get('/switch-locale', function (Illuminate\Http\Request $request) {
