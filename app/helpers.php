@@ -96,3 +96,46 @@ if(! function_exists('translateLanguage')) {
         });
     }
 }
+
+if(! function_exists('responseDataTable')) {
+    function responseDataTable($response) {
+        return response()->json([
+            'success' => true,
+            'data' => isset($response['data']) ? $response['data'] : 0,
+            'recordsTotal' => isset($response['recordsTotal']) ? $response['recordsTotal'] : 0,
+            'recordsFiltered' => isset($response['recordsFiltered']) ? $response['recordsFiltered'] : 0,
+        ]);
+    }
+}
+
+if(! function_exists('successResponses')) {
+    function successResponses($message=null, $data = [], $code = 200) {
+        return response()->json([
+            'success' => true,
+            'message' => $message,
+            'data' => $data,
+            'code' => $code,
+        ], $code);
+    }
+}
+
+if (! function_exists('errorResponses')) {
+    function errorResponses($error, $code = 500) {
+        return response()->json([
+            'success' => false,
+            'errors' => $error,
+            'code' => $code,
+        ], $code);
+    }
+}
+
+if (! function_exists('errorResponsesWithData')) {
+    function errorResponsesWithData($error, $data = [], $code = 500) {
+        return response()->json([
+            'success' => false,
+            'errors' => $error,
+            'data' => $data,
+            'code' => $code,
+        ], $code);
+    }
+}

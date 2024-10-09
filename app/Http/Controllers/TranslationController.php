@@ -4,11 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Models\Language;
 use App\TranslationsManager;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Routing\Controllers\HasMiddleware;
 use App\Repositories\Translation\TranslationInterface;
 
-class TranslationController extends Controller
+class TranslationController extends Controller implements HasMiddleware
 {
     protected $repo;
+
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permissions:language-list,language-create,language-edit', only: ['index', 'list', 'autoTranslation', 'public']),
+            new Middleware('permissions:language-create', only: ['store']),
+            new Middleware('permissions:language-delete', only: ['destroy']),
+        ];
+    }
 
     public function __construct(TranslationInterface $interface) {
         $this->repo = $interface;
@@ -29,9 +40,9 @@ class TranslationController extends Controller
            $responses = $this->repo->list();
 
            $data = $responses['data'];
-           return response()->json($data);
+           return responseDataTable($data);
         } catch (\Exception $e) {
-            return response()->json($e->getMessage());
+            return errorResponses($e->getMessage());
         }
     }
 
@@ -40,22 +51,22 @@ class TranslationController extends Controller
             $responses = $this->repo->store();
 
             if(!$responses['success']) {
-                return response()->json(['error' => __('messages.language_not_found')], 400);
+                return errorResponses(__('messages.language_not_found'));
             }
             
-            return response()->json(['success' => true, 'message' => __('messages.translation_created')], 200);
+            return successResponses(__('messages.translation_created'));
         } catch (\Exception $e) {
-            return response()->json($e->getMessage());
+            return errorResponses($e->getMessage());
         }
     }
 
     public function autoTranslation($id) {
         try {
-            $responses = $this->repo->autoTranslation($id);
+            $this->repo->autoTranslation($id);
 
-            return response()->json(['success' => true, 'message' => __('messages.auto_translate_completed')], 200);
+            return successResponses(__('messages.auto_translate_completed'));
         } catch (\Exception $e) {
-            return response()->json($e->getMessage());
+            return errorResponses($e->getMessage());
         }
     }
 
@@ -64,12 +75,12 @@ class TranslationController extends Controller
             $responses = $this->repo->destroy($id);
 
             if(!$responses['success']) {
-                return response()->json(['error' => __('messages.translation_not_found')], 500);
+                return errorResponses(__('messages.translation_not_found'));
             }
             
-            return response()->json(['success' => true, 'message' => __('messages.translation_deleted')], 200);
+            return successResponses(__('messages.translation_deleted'));
         } catch (\Exception $e) {
-            return response()->json($e->getMessage());
+            return errorResponses($e->getMessage());
         }
     }
 
@@ -77,9 +88,9 @@ class TranslationController extends Controller
         try {
             app(TranslationsManager::class)->export();
 
-            return response()->json(['success' => true, 'message' => __('messages.translation_exported')], 200);
+            return successResponses(__('messages.translation_exported'));
         } catch (\Exception $e) {
-            return response()->json($e->getMessage());
+            return errorResponses($e->getMessage());
         }
     }
 }

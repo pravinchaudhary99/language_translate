@@ -189,7 +189,7 @@ var LanguageList = function() {
                                     toastr.success(response.message ?? 'Phrases has been updated successfully')
                                 }
                                 $("#update_translation_value").modal('hide');
-                                datatable.ajax.reload(null, false);
+                                datatable.ajax.reload(null, true);
                             },
                             error: function(response) {
                                 const errorMessage = getErrorMessage(response);

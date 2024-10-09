@@ -1,304 +1,152 @@
 @extends('layouts.header')
 
 @section('content')
-<div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
-    </ol>
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+    <div class="toolbar" id="kt_toolbar">
+        <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
+            <div data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}" class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
+                <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">{{ __('lables.roles') }}</h1>
+                <span class="h-20px border-gray-200 border-start mx-4"></span>
+                <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
+                    <li class="breadcrumb-item text-muted">
+                        <a href="{{ route('home') }}" class="text-muted text-hover-primary">{{ __('lables.home') }}</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <span class="bullet bg-gray-200 w-5px h-2px"></span>
+                    </li>
+                    <li class="breadcrumb-item text-dark">{{ __('lables.roles') }} {{ __('lables.list') }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="post d-flex flex-column-fluid" id="kt_post">
+      <div id="kt_content_container" class="container-xxl">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-5 g-xl-9">
+          @isset($data['roles'])
+            @foreach ($data['roles'] as $role)
+              <div class="col-md-4">
+                <div class="card card-flush h-md-100">
+                  <div class="card-header">
+                    <div class="card-title">
+                      <h2>{{ $role->name }}</h2>
+                    </div>
+                  </div>
+                  <div class="card-body pt-1">
+                    <div class="fw-bolder text-gray-600 mb-5">{{ __('lables.total_users_with_this_role') }}: {{ $role->users->count() }}</div>
+                    <div class="d-flex flex-column text-gray-600">
+                      @foreach($role->permissionsList as $index => $permission)
+                          @if($index < 7)
+                            <div class="d-flex align-items-center py-2">
+                                <span class="bullet bg-primary me-3"></span>{{ $permission }}
+                            </div>
+                          @elseif($index === 7)
+                              <div class="d-flex align-items-center py-2">
+                                  <span class="bullet bg-primary me-3"></span>
+                                  <em>{{ __('lables.and') }} {{ $role->permissionsList->count() - 7 }} {{ __('lables.more') }}...</em>
+                              </div>
+                              @break
+                          @endif
+                      @endforeach
+                    </div>
+                  </div>
+                  <div class="card-footer flex-wrap pt-0">
+                    <a href="{{ route('roles.view', $role->id) }}" class="btn btn-light btn-active-primary my-1 me-2" data-role="{{ $role->name }}" data-permissions="{{ $role->permissions->pluck('id') }}">{{ __('lables.view') }} {{ __('lables.role') }}</a>
+                    <button type="button" class="btn btn-light btn-active-light-primary my-1 editRoleAndPermission" data-id="{{ $role->id }}" data-role="{{ $role->name }}" data-permissions="{{ $role->permissions->pluck('id') }}" data-bs-toggle="modal" data-bs-target="#kt_modal_add_role">{{ __('lables.edit') }} {{ __('lables.role') }}</button>
+                  </div>
+                </div>
+              </div>
+            @endforeach
+          @endisset
+          <div class="ol-md-4">
+            <div class="card h-md-100">
+              <div class="card-body d-flex flex-center">
+                <button type="button" class="btn btn-clear d-flex flex-column flex-center" data-bs-toggle="modal" data-bs-target="#kt_modal_add_role">
+                  <img src="{{ asset('assets/media/illustrations/unitedpalms-1/4.png') }}" alt="" class="mw-100 mh-150px mb-7">
+                  <div class="fw-bolder fs-3 text-gray-600 text-hover-primary">{{ __('lables.add_new_role') }}</div>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal fade" id="kt_modal_add_role" tabindex="-1" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered mw-750px">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h2 class="fw-bolder addRole">{{ __('lables.add_a_role') }}</h2>
+                <h2 class="fw-bolder editRole d-none">{{ __('lables.edit_a_role') }}</h2>
+                <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-roles-modal-action="close" data-bs-dismiss="modal">
+                  <span class="svg-icon svg-icon-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                      <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black"></rect>
+                      <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black"></rect>
+                    </svg>
+                  </span>
+                </div>
+              </div>
+              <div class="modal-body scroll-y mx-lg-5 my-7">
+                <form id="kt_modal_add_role_form" class="form fv-plugins-bootstrap5 fv-plugins-framework" action="#">
+                  <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_add_role_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_role_header" data-kt-scroll-wrappers="#kt_modal_add_role_scroll" data-kt-scroll-offset="300px" style="max-height: 142px;">
+                    <div class="fv-row mb-10 fv-plugins-icon-container">
+                      <label class="fs-5 fw-bolder form-label mb-2">
+                        <span class="required">{{ __('lables.role') }} {{ __('lables.name') }}</span>
+                      </label>
+                      <input class="form-control form-control-solid" placeholder="Enter a role name" name="name" data-label="{{ __('lables.role') }}">
+                    <div class="fv-plugins-message-container invalid-feedback"></div></div>
+                    <div class="fv-row">
+                      <label class="fs-5 fw-bolder form-label mb-2">{{ __('lables.role') }}  {{ __('lables.permissions') }}</label>
+                      <div class="table-responsive">
+                        <table class="table align-middle table-row-dashed fs-6 gy-5">
+                          <tbody class="text-gray-600 fw-bold">
+                            @isset($data['permissions'])
+                              <tr>
+                                <td class="text-gray-800">{{ __('lables.administrator_access') }}
+                                <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="" data-bs-original-title="Allows a full access to the system" aria-label="Allows a full access to the system"></i></td>
+                                <td>
+                                  <label class="form-check form-check-custom form-check-solid me-9">
+                                    <input class="form-check-input" type="checkbox" value="" id="kt_roles_select_all">
+                                    <span class="form-check-label" for="kt_roles_select_all">{{ __('lables.select') }}  {{ __('lables.all') }}</span>
+                                  </label>
+                                </td>
+                              </tr>
+                              @foreach($data['permissions'] as $key => $permissions)
+                                <tr>
+                                  <td class="text-gray-800">{{ $key }} {{ __('lables.management') }}</td>
+                                  <td>
+                                    <div class="d-flex">
+                                      @foreach ($permissions as $permission)
+                                        <label class="form-check form-check-sm form-check-custom form-check-solid me-5 me-lg-20">
+                                          <input class="form-check-input" type="checkbox" value="{{ $permission->id }}" name="permissions[]" data-label="{{ __('lables.permissions') }}">
+                                          <span class="form-check-label">{{ ucfirst(\Illuminate\Support\Str::of($permission->name)->afterLast('-')) }}</span>
+                                        </label>
+                                      @endforeach
+                                    </div>
+                                  </td>
+                                </tr>
+                              @endforeach
+                            @endisset
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="text-center pt-15">
+                    <button type="reset" class="btn btn-light me-3" data-kt-roles-modal-action="cancel" data-bs-dismiss="modal">{{ __('labels.discard') }}</button>
+                    <button type="buttton" id="rolesAddSubmitButton" class="btn btn-primary" data-kt-roles-modal-action="submit">
+                      <span class="indicator-label">{{ __('labels.submit') }}</span>
+                      <span class="indicator-progress">{{ __('labels.please_wait') }}...
+                      <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                    </button>
+                  </div>
+                <div></div></form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 </div>
-
-<div class="row mb-3">
-    <!-- Earnings (Monthly) Card Example -->
-    <div class="col-xl-3 col-md-6 mb-4">
-      <div class="card h-100">
-        <div class="card-body">
-          <div class="row align-items-center">
-            <div class="col mr-2">
-              <div class="text-xs font-weight-bold text-uppercase mb-1">Earnings (Monthly)</div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
-              <div class="mt-2 mb-0 text-muted text-xs">
-                <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-                <span>Since last month</span>
-              </div>
-            </div>
-            <div class="col-auto">
-              <i class="fas fa-calendar fa-2x text-primary"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Earnings (Annual) Card Example -->
-    <div class="col-xl-3 col-md-6 mb-4">
-      <div class="card h-100">
-        <div class="card-body">
-          <div class="row no-gutters align-items-center">
-            <div class="col mr-2">
-              <div class="text-xs font-weight-bold text-uppercase mb-1">Sales</div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">650</div>
-              <div class="mt-2 mb-0 text-muted text-xs">
-                <span class="text-success mr-2"><i class="fas fa-arrow-up"></i> 12%</span>
-                <span>Since last years</span>
-              </div>
-            </div>
-            <div class="col-auto">
-              <i class="fas fa-shopping-cart fa-2x text-success"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- New User Card Example -->
-    <div class="col-xl-3 col-md-6 mb-4">
-      <div class="card h-100">
-        <div class="card-body">
-          <div class="row no-gutters align-items-center">
-            <div class="col mr-2">
-              <div class="text-xs font-weight-bold text-uppercase mb-1">New User</div>
-              <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">366</div>
-              <div class="mt-2 mb-0 text-muted text-xs">
-                <span class="text-success mr-2"><i class="fas fa-arrow-up"></i> 20.4%</span>
-                <span>Since last month</span>
-              </div>
-            </div>
-            <div class="col-auto">
-              <i class="fas fa-users fa-2x text-info"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Pending Requests Card Example -->
-    <div class="col-xl-3 col-md-6 mb-4">
-      <div class="card h-100">
-        <div class="card-body">
-          <div class="row no-gutters align-items-center">
-            <div class="col mr-2">
-              <div class="text-xs font-weight-bold text-uppercase mb-1">Pending Requests</div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
-              <div class="mt-2 mb-0 text-muted text-xs">
-                <span class="text-danger mr-2"><i class="fas fa-arrow-down"></i> 1.10%</span>
-                <span>Since yesterday</span>
-              </div>
-            </div>
-            <div class="col-auto">
-              <i class="fas fa-comments fa-2x text-warning"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Area Chart -->
-    <div class="col-xl-8 col-lg-7">
-      <div class="card mb-4">
-        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-          <h6 class="m-0 font-weight-bold text-primary">Monthly Recap Report</h6>
-          <div class="dropdown no-arrow">
-            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
-              aria-haspopup="true" aria-expanded="false">
-              <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-            </a>
-            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-              aria-labelledby="dropdownMenuLink">
-              <div class="dropdown-header">Dropdown Header:</div>
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="chart-area">
-            <canvas id="myAreaChart"></canvas>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Pie Chart -->
-    <div class="col-xl-4 col-lg-5">
-      <div class="card mb-4">
-        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-          <h6 class="m-0 font-weight-bold text-primary">Products Sold</h6>
-          <div class="dropdown no-arrow">
-            <a class="dropdown-toggle btn btn-primary btn-sm" href="#" role="button" id="dropdownMenuLink"
-              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Month <i class="fas fa-chevron-down"></i>
-            </a>
-            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-              aria-labelledby="dropdownMenuLink">
-              <div class="dropdown-header">Select Periode</div>
-              <a class="dropdown-item" href="#">Today</a>
-              <a class="dropdown-item" href="#">Week</a>
-              <a class="dropdown-item active" href="#">Month</a>
-              <a class="dropdown-item" href="#">This Year</a>
-            </div>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="mb-3">
-            <div class="small text-gray-500">Oblong T-Shirt
-              <div class="small float-right"><b>600 of 800 Items</b></div>
-            </div>
-            <div class="progress" style="height: 12px;">
-              <div class="progress-bar bg-warning" role="progressbar" style="width: 80%" aria-valuenow="80"
-                aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-          </div>
-          <div class="mb-3">
-            <div class="small text-gray-500">Gundam 90'Editions
-              <div class="small float-right"><b>500 of 800 Items</b></div>
-            </div>
-            <div class="progress" style="height: 12px;">
-              <div class="progress-bar bg-success" role="progressbar" style="width: 70%" aria-valuenow="70"
-                aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-          </div>
-          <div class="mb-3">
-            <div class="small text-gray-500">Rounded Hat
-              <div class="small float-right"><b>455 of 800 Items</b></div>
-            </div>
-            <div class="progress" style="height: 12px;">
-              <div class="progress-bar bg-danger" role="progressbar" style="width: 55%" aria-valuenow="55"
-                aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-          </div>
-          <div class="mb-3">
-            <div class="small text-gray-500">Indomie Goreng
-              <div class="small float-right"><b>400 of 800 Items</b></div>
-            </div>
-            <div class="progress" style="height: 12px;">
-              <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50"
-                aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-          </div>
-          <div class="mb-3">
-            <div class="small text-gray-500">Remote Control Car Racing
-              <div class="small float-right"><b>200 of 800 Items</b></div>
-            </div>
-            <div class="progress" style="height: 12px;">
-              <div class="progress-bar bg-success" role="progressbar" style="width: 30%" aria-valuenow="30"
-                aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-          </div>
-        </div>
-        <div class="card-footer text-center">
-          <a class="m-0 small text-primary card-link" href="#">View More <i
-              class="fas fa-chevron-right"></i></a>
-        </div>
-      </div>
-    </div>
-    <!-- Invoice Example -->
-    <div class="col-xl-8 col-lg-7 mb-4">
-      <div class="card">
-        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-          <h6 class="m-0 font-weight-bold text-primary">Invoice</h6>
-          <a class="m-0 float-right btn btn-danger btn-sm" href="#">View More <i
-              class="fas fa-chevron-right"></i></a>
-        </div>
-        <div class="table-responsive">
-          <table class="table align-items-center table-flush">
-            <thead class="thead-light">
-              <tr>
-                <th>Order ID</th>
-                <th>Customer</th>
-                <th>Item</th>
-                <th>Status</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><a href="#">RA0449</a></td>
-                <td>Udin Wayang</td>
-                <td>Nasi Padang</td>
-                <td><span class="badge badge-success">Delivered</span></td>
-                <td><a href="#" class="btn btn-sm btn-primary">Detail</a></td>
-              </tr>
-              <tr>
-                <td><a href="#">RA5324</a></td>
-                <td>Jaenab Bajigur</td>
-                <td>Gundam 90' Edition</td>
-                <td><span class="badge badge-warning">Shipping</span></td>
-                <td><a href="#" class="btn btn-sm btn-primary">Detail</a></td>
-              </tr>
-              <tr>
-                <td><a href="#">RA8568</a></td>
-                <td>Rivat Mahesa</td>
-                <td>Oblong T-Shirt</td>
-                <td><span class="badge badge-danger">Pending</span></td>
-                <td><a href="#" class="btn btn-sm btn-primary">Detail</a></td>
-              </tr>
-              <tr>
-                <td><a href="#">RA1453</a></td>
-                <td>Indri Junanda</td>
-                <td>Hat Rounded</td>
-                <td><span class="badge badge-info">Processing</span></td>
-                <td><a href="#" class="btn btn-sm btn-primary">Detail</a></td>
-              </tr>
-              <tr>
-                <td><a href="#">RA1998</a></td>
-                <td>Udin Cilok</td>
-                <td>Baby Powder</td>
-                <td><span class="badge badge-success">Delivered</span></td>
-                <td><a href="#" class="btn btn-sm btn-primary">Detail</a></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="card-footer"></div>
-      </div>
-    </div>
-    <!-- Message From Customer-->
-    <div class="col-xl-4 col-lg-5 ">
-      <div class="card">
-        <div class="card-header py-4 bg-primary d-flex flex-row align-items-center justify-content-between">
-          <h6 class="m-0 font-weight-bold text-light">Message From Customer</h6>
-        </div>
-        <div>
-          <div class="customer-message align-items-center">
-            <a class="font-weight-bold" href="#">
-              <div class="text-truncate message-title">Hi there! I am wondering if you can help me with a
-                problem I've been having.</div>
-              <div class="small text-gray-500 message-time font-weight-bold">Udin Cilok · 58m</div>
-            </a>
-          </div>
-          <div class="customer-message align-items-center">
-            <a href="#">
-              <div class="text-truncate message-title">But I must explain to you how all this mistaken idea
-              </div>
-              <div class="small text-gray-500 message-time">Nana Haminah · 58m</div>
-            </a>
-          </div>
-          <div class="customer-message align-items-center">
-            <a class="font-weight-bold" href="#">
-              <div class="text-truncate message-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit
-              </div>
-              <div class="small text-gray-500 message-time font-weight-bold">Jajang Cincau · 25m</div>
-            </a>
-          </div>
-          <div class="customer-message align-items-center">
-            <a class="font-weight-bold" href="#">
-              <div class="text-truncate message-title">At vero eos et accusamus et iusto odio dignissimos
-                ducimus qui blanditiis
-              </div>
-              <div class="small text-gray-500 message-time font-weight-bold">Udin Wayang · 54m</div>
-            </a>
-          </div>
-          <div class="card-footer text-center">
-            <a class="m-0 small text-primary card-link" href="#">View More <i
-                class="fas fa-chevron-right"></i></a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 @endsection
 
 @section('scripts')
-  <script src="{{ asset('assets/js/Chart.js') }}"></script>
-  <script src="{{ asset('assets/js/Chart.bundle.js') }}"></script>
-  <script src="{{ asset('assets/js/demo/chart-area-demo.js') }}"></script>
+  <script src="{{ asset('assets/js/Admin/Roles/validation.js') }}"></script>
 @endsection
