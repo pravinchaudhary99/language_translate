@@ -57,4 +57,29 @@ class RoleController extends Controller implements HasMiddleware
             return errorResponses($e->getMessage());
         }
     }
+
+    public function view($id){
+        try {
+            $responses = $this->repo->view($id);
+
+            if(!$responses['success']){
+                return redirect()->back()->with('error', __('messages.role_not_found'));;
+            }
+
+            $data = $responses['data'];
+            return view('roles.view', compact('data'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
+
+    public function list($id) {
+        try {
+            $responses = $this->repo->list($id);
+
+            return responseDataTable($responses['data']);
+        } catch (\Exception $e) {
+            return errorResponses($e->getMessage());
+        }
+    }
 }

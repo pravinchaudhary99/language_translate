@@ -48,8 +48,12 @@ Route::prefix('translations')->as('translations.')->middleware('auth')->group(fu
 
 Route::prefix('roles')->as('roles.')->group(function() {
     Route::get('/', [RoleController::class, 'index'])->name('index');
+    
     Route::post('/store', [RoleController::class, 'store'])->name('store');
     Route::post('/update/{id}', [RoleController::class, 'update'])->name('update');
+    
+    Route::get('/view/{id}', [RoleController::class, 'view'])->name('view');
+    Route::post('/list/{id}', [RoleController::class, 'list'])->name('list');
 });
 
 Route::prefix('users')->as('users.')->group(function() {

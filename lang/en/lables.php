@@ -62,4 +62,5 @@ return array (
   'edit_user' => 'Edit User',
   'password_confirmation' => 'Password confirmation',
   'permissions' => 'Permissions',
+  'assigned' => 'Assigned',
 );

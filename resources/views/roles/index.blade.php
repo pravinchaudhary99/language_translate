@@ -50,7 +50,7 @@
                     </div>
                   </div>
                   <div class="card-footer flex-wrap pt-0">
-                    <a href="" class="btn btn-light btn-active-primary my-1 me-2" data-role="{{ $role->name }}" data-permissions="{{ $role->permissions->pluck('id') }}">{{ __('lables.view') }} {{ __('lables.role') }}</a>
+                    <a href="{{ route('roles.view', $role->id) }}" class="btn btn-light btn-active-primary my-1 me-2" data-role="{{ $role->name }}" data-permissions="{{ $role->permissions->pluck('id') }}">{{ __('lables.view') }} {{ __('lables.role') }}</a>
                     <button type="button" class="btn btn-light btn-active-light-primary my-1 editRoleAndPermission" data-id="{{ $role->id }}" data-role="{{ $role->name }}" data-permissions="{{ $role->permissions->pluck('id') }}" data-bs-toggle="modal" data-bs-target="#kt_modal_add_role">{{ __('lables.edit') }} {{ __('lables.role') }}</button>
                   </div>
                 </div>
