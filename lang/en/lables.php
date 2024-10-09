@@ -53,4 +53,13 @@ return array (
   'users' => 'Users',
   'add_a_role' => 'Add a role',
   'edit_a_role' => 'Edit a role',
+  'total_users_with_this_role' => 'Total users with this role',
+  'view' => 'View',
+  'add_new_role' => 'Add New Role',
+  'administrator_access' => 'Administrator Access',
+  'all' => 'All',
+  'add_user' => 'Add User',
+  'edit_user' => 'Edit User',
+  'password_confirmation' => 'Password confirmation',
+  'permissions' => 'Permissions',
 );

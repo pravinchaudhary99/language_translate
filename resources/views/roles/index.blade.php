@@ -32,7 +32,7 @@
                     </div>
                   </div>
                   <div class="card-body pt-1">
-                    <div class="fw-bolder text-gray-600 mb-5">Total users with this role: {{ $role->users->count() }}</div>
+                    <div class="fw-bolder text-gray-600 mb-5">{{ __('lables.total_users_with_this_role') }}: {{ $role->users->count() }}</div>
                     <div class="d-flex flex-column text-gray-600">
                       @foreach($role->permissionsList as $index => $permission)
                           @if($index < 7)
@@ -42,7 +42,7 @@
                           @elseif($index === 7)
                               <div class="d-flex align-items-center py-2">
                                   <span class="bullet bg-primary me-3"></span>
-                                  <em>and {{ $role->permissionsList->count() - 7 }} more...</em>
+                                  <em>{{ __('lables.and') }} {{ $role->permissionsList->count() - 7 }} {{ __('lables.more') }}...</em>
                               </div>
                               @break
                           @endif
@@ -50,8 +50,8 @@
                     </div>
                   </div>
                   <div class="card-footer flex-wrap pt-0">
-                    <a href="" class="btn btn-light btn-active-primary my-1 me-2" data-role="{{ $role->name }}" data-permissions="{{ $role->permissions->pluck('id') }}">View Role</a>
-                    <button type="button" class="btn btn-light btn-active-light-primary my-1 editRoleAndPermission" data-id="{{ $role->id }}" data-role="{{ $role->name }}" data-permissions="{{ $role->permissions->pluck('id') }}" data-bs-toggle="modal" data-bs-target="#kt_modal_add_role">Edit Role</button>
+                    <a href="" class="btn btn-light btn-active-primary my-1 me-2" data-role="{{ $role->name }}" data-permissions="{{ $role->permissions->pluck('id') }}">{{ __('lables.view') }} {{ __('lables.role') }}</a>
+                    <button type="button" class="btn btn-light btn-active-light-primary my-1 editRoleAndPermission" data-id="{{ $role->id }}" data-role="{{ $role->name }}" data-permissions="{{ $role->permissions->pluck('id') }}" data-bs-toggle="modal" data-bs-target="#kt_modal_add_role">{{ __('lables.edit') }} {{ __('lables.role') }}</button>
                   </div>
                 </div>
               </div>
@@ -62,7 +62,7 @@
               <div class="card-body d-flex flex-center">
                 <button type="button" class="btn btn-clear d-flex flex-column flex-center" data-bs-toggle="modal" data-bs-target="#kt_modal_add_role">
                   <img src="{{ asset('assets/media/illustrations/unitedpalms-1/4.png') }}" alt="" class="mw-100 mh-150px mb-7">
-                  <div class="fw-bolder fs-3 text-gray-600 text-hover-primary">Add New Role</div>
+                  <div class="fw-bolder fs-3 text-gray-600 text-hover-primary">{{ __('lables.add_new_role') }}</div>
                 </button>
               </div>
             </div>
@@ -88,23 +88,23 @@
                   <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_add_role_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_role_header" data-kt-scroll-wrappers="#kt_modal_add_role_scroll" data-kt-scroll-offset="300px" style="max-height: 142px;">
                     <div class="fv-row mb-10 fv-plugins-icon-container">
                       <label class="fs-5 fw-bolder form-label mb-2">
-                        <span class="required">Role name</span>
+                        <span class="required">{{ __('lables.role') }} {{ __('lables.name') }}</span>
                       </label>
                       <input class="form-control form-control-solid" placeholder="Enter a role name" name="name" data-label="{{ __('lables.role') }}">
                     <div class="fv-plugins-message-container invalid-feedback"></div></div>
                     <div class="fv-row">
-                      <label class="fs-5 fw-bolder form-label mb-2">Role Permissions</label>
+                      <label class="fs-5 fw-bolder form-label mb-2">{{ __('lables.role') }}  {{ __('lables.permissions') }}</label>
                       <div class="table-responsive">
                         <table class="table align-middle table-row-dashed fs-6 gy-5">
                           <tbody class="text-gray-600 fw-bold">
                             @isset($data['permissions'])
                               <tr>
-                                <td class="text-gray-800">Administrator Access
+                                <td class="text-gray-800">{{ __('lables.administrator_access') }}
                                 <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="" data-bs-original-title="Allows a full access to the system" aria-label="Allows a full access to the system"></i></td>
                                 <td>
                                   <label class="form-check form-check-custom form-check-solid me-9">
                                     <input class="form-check-input" type="checkbox" value="" id="kt_roles_select_all">
-                                    <span class="form-check-label" for="kt_roles_select_all">Select all</span>
+                                    <span class="form-check-label" for="kt_roles_select_all">{{ __('lables.select') }}  {{ __('lables.all') }}</span>
                                   </label>
                                 </td>
                               </tr>
@@ -130,10 +130,10 @@
                     </div>
                   </div>
                   <div class="text-center pt-15">
-                    <button type="reset" class="btn btn-light me-3" data-kt-roles-modal-action="cancel" data-bs-dismiss="modal">Discard</button>
+                    <button type="reset" class="btn btn-light me-3" data-kt-roles-modal-action="cancel" data-bs-dismiss="modal">{{ __('labels.discard') }}</button>
                     <button type="buttton" id="rolesAddSubmitButton" class="btn btn-primary" data-kt-roles-modal-action="submit">
-                      <span class="indicator-label">Submit</span>
-                      <span class="indicator-progress">Please wait...
+                      <span class="indicator-label">{{ __('labels.submit') }}</span>
+                      <span class="indicator-progress">{{ __('labels.please_wait') }}...
                       <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                     </button>
                   </div>

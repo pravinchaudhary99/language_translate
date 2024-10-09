@@ -59,6 +59,8 @@ Route::prefix('users')->as('users.')->group(function() {
     Route::post('/store', [UserManagementController::class, 'store'])->name('store');
     Route::get('/edit/{id}', [UserManagementController::class, 'edit'])->name('edit');
     Route::post('/update/{id}', [UserManagementController::class, 'update'])->name('update');
+
+    Route::delete('/destroy/{id}', [UserManagementController::class, 'destroy'])->name('delete');
 });
 
 Route::get('/switch-locale', function (Illuminate\Http\Request $request) {

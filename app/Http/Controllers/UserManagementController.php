@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Admin\UserRequest;
 use Illuminate\Http\Request;
+use App\Http\Requests\Admin\UserRequest;
 use App\Repositories\Users\UserInterface;
+use App\Http\Requests\Admin\UserUpdateRequest;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Routing\Controllers\HasMiddleware;
 
@@ -60,6 +61,34 @@ class UserManagementController extends Controller implements HasMiddleware
 
             $data = $responses['data'];
             return successResponses(__('messages.user_found'), $data);
+        } catch (\Exception $e) {
+            return errorResponses($e->getMessage());
+        }
+    }
+
+    public function update(UserUpdateRequest $request, $id) {
+        try {
+            $responses = $this->repo->update($id);
+
+            if(!$responses['success']){
+                return errorResponses(__('messages.user_not_found'));
+            }
+
+            return successResponses(__('messages.user_updated'));
+        } catch (\Exception $e) {
+            return errorResponses($e->getMessage());
+        }
+    }
+
+    public function destroy($id) {
+        try {
+            $responses = $this->repo->destroy($id);
+
+            if(!$responses['success']){
+                return errorResponses(__('messages.user_not_found'));
+            }
+            
+            return successResponses(__('messages.user_deleted'));
         } catch (\Exception $e) {
             return errorResponses($e->getMessage());
         }

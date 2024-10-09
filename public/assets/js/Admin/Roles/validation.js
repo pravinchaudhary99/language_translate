@@ -61,6 +61,8 @@ var RoleValidation = function() {
                                 $("#kt_modal_add_role_form").trigger("reset");
                                 $("#kt_modal_add_role").modal("hide");
                                 location.reload();
+                                $(".editUser").addClass('d-none');
+                                $(".addUser").removeClass('d-none');
                             },
                             error: function(response) {
                                 const errorMessage = getErrorMessage(response);
@@ -86,6 +88,11 @@ var RoleValidation = function() {
         }else{
             modal.find("input[name='permissions[]']").prop("checked",false);
         }
+    });
+
+    $("button[data-bs-target='#kt_modal_add_role']").on("click", function() {
+        $("h2.editRole").addClass('d-none');
+        $("h2.addRole").removeClass('d-none');
     });
 
     function getErrorMessage(response) {
@@ -129,8 +136,8 @@ var RoleValidation = function() {
         });
 
         $("#rolesAddSubmitButton").attr('data-update', id);
-        $(".addRole").addClass("d-none");
-        $(".editRole").removeClass("d-none");
+        $("h2.addRole").addClass("d-none");
+        $("h2.editRole").removeClass("d-none");
         
         modal.find("#kt_roles_select_all").prop("checked", permissions.length === permissionsAll);
     });

@@ -65,7 +65,7 @@
                             <div class="menu-item">
                                 <a class="menu-link @if(Request::is('/')) active @endif" href="{{ route('home') }}">
                                     <span class="menu-icon">
-                                        <i class="bi bi-grid fs-3"></i>
+                                        <i class="bi bi-house fs-3"></i>
                                     </span>
                                     <span class="menu-title">{{ __('lables.dashboard') }}</span>
                                 </a>
@@ -73,7 +73,7 @@
                             <div class="menu-item">
                                 <a class="menu-link @if(Request::is('*translations*')) active @endif" href="{{ route('translations.index') }}">
                                     <span class="menu-icon">
-                                        <i class="bi bi-grid fs-3"></i>
+                                        <i class="bi bi-translate fs-3"></i>
                                     </span>
                                     <span class="menu-title">{{ __('lables.translations') }}</span>
                                 </a>
@@ -81,7 +81,7 @@
                             <div class="menu-item">
                                 <a class="menu-link @if(Request::is('*roles*')) active @endif" href="{{ route('roles.index') }}">
                                     <span class="menu-icon">
-                                        <i class="bi bi-grid fs-3"></i>
+                                        <i class="bi bi-ui-checks-grid fs-3"></i>
                                     </span>
                                     <span class="menu-title">{{ __('lables.roles') }}</span>
                                 </a>
@@ -89,7 +89,7 @@
                             <div class="menu-item">
                                 <a class="menu-link @if(Request::is('*users*')) active @endif" href="{{ route('users.index') }}">
                                     <span class="menu-icon">
-                                        <i class="bi bi-user fs-3"></i>
+                                        <i class="bi bi-people fs-3"></i>
                                     </span>
                                     <span class="menu-title">{{ __('lables.users') }}</span>
                                 </a>

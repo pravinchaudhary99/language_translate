@@ -80,4 +80,45 @@ class UserRepository implements UserInterface
         $this->responsesData['data'] = ['user' => $user];
         return $this->responsesData;
     }
+
+    public function update($id) {
+        $user = User::find($id);
+
+        if(!$user) {
+            $this->responsesData['success'] = false;
+            return $this->responsesData;
+        }
+
+        if($this->request->password && $this->request->password != ''){
+            $data = [
+                'name' => $this->request->name,
+                'email' => $this->request->email,
+                'password' => Hash::make($this->request->password),
+                'role_id' => $this->request->role,
+            ];
+        }else{
+            $data = [
+                'name' => $this->request->name,
+                'email' => $this->request->email,
+                'role_id' => $this->request->role,
+            ];
+        }
+        $user->update($data);
+
+        $this->responsesData['success'] = true;
+        return $this->responsesData;
+    }
+
+    public function destroy($id) {
+        $user = User::find($id);
+
+        if(!$user) {
+            $this->responsesData['success'] = false;
+            return $this->responsesData;
+        }
+
+        $user->delete();
+        $this->responsesData['success'] = true;
+        return $this->responsesData;
+    }
 }

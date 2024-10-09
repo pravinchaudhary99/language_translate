@@ -68,27 +68,6 @@ var UserList = function() {
         });
     }
 
-    $(document).on("click", ".editUser", function() {
-        const id = $(this).attr('data-id');
-
-        $.ajax({
-            method: 'get',
-            url: '/users/edit/' + id,
-            success: function(response) {
-                var user = response.data.user;
-                $("#kt_modal_add_user").modal('show');
-                $("#userFormSubmit").attr('data-update', user.id);
-                $("input[name=name]").val(user.name);
-                $("input[name=email]").val(user.email);
-                $("#userRoleSelect").val(user.role_id).trigger("change");
-            },
-            error: function(response, textStatus, errorThrown){
-                const errorMessage = getErrorMessage(response);
-                toastr.error(errorMessage);
-            }
-        });
-    });
-
     $(document).on("click", ".deleteUser", function() {
         const id = $(this).attr('data-id');
 
